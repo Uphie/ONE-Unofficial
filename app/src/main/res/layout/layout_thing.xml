@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/thing_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_thing_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="October 15,2014" />
+
+        <include layout="@layout/divider_gray_line" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_thing"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:placeholderImage="@drawable/picture_holder"
+            app:viewAspectRatio="1" />
+
+        <TextView
+            android:id="@+id/text_thing_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="3dp"
+            android:text="剪刀石头布"
+            android:textColor="#525355"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_thing_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="5dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text=" 来打赌吧，赢了你给我一块糖！"
+            android:textColor="#525355"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>

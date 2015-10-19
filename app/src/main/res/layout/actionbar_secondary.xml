@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@drawable/actionbar"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="30dp"
+        android:layout_centerVertical="true"
+        android:paddingTop="5dp"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/actionbar_title"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:textSize="17sp"
+        android:textColor="#606060"
+        android:text="關於"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

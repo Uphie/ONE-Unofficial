@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/content_gray"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/saying_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VOL.799"
+            android:textSize="15sp" />
+
+        <include layout="@layout/divider_gray_line" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_illustrator"
+            android:layout_width="match_parent"
+            app:placeholderImage="@drawable/picture_holder"
+            android:layout_height="250dp" />
+
+        <TextView
+            android:id="@+id/text_illustration_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:lineSpacingExtra="5dp"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingTop="3dp"
+            android:text="凝固的风\n摄影/李佳鸾" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15"
+                    android:textColor="@color/blue"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dec,2014"
+                    android:textColor="#A9AAAC"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_saying"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bg_home_saying"
+                android:lineSpacingExtra="5dp"
+                android:lineSpacingMultiplier="1.2"
+                android:padding="10dp"
+                android:text="过一个平凡无趣的人生太容易了，你可以不读书，不冒险，不运动不写作，不外出，不折腾，但是，人生最后悔的事情就是：我本可以。by 陈素封"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <com.uphie.one.widgets.LikeView
+            android:id="@+id/liv_saying"
+            style="@style/LikeViewStyle" />
+    </LinearLayout>
+</ScrollView>
+

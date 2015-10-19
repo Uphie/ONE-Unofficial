@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/question_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/text_question_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="October 15,2014" />
+
+        <include layout="@layout/divider_gray_line" />
+
+        <TextView
+            android:id="@+id/text_question_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_question"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:paddingTop="3dp"
+            android:text="看日出日落，云卷西月是怎样一种体验？"
+            android:textColor="#7A7B7D"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_question_content"
+            style="@style/ParagraphStyle"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            android:text="        夏知花落问：“在那里，平铺一湾湛蓝，挂苏月，引曲水，看日出日落，云卷西月。”你可否理解其中的意境，怎样的一种体验？" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:background="#C6C7C9" />
+
+        <TextView
+            android:id="@+id/text_answer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_answer"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:text="小明答夏知花落："
+            android:textColor="#7A7B7D"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_answer_content"
+            style="@style/ParagraphStyle"
+            android:layout_marginTop="15dp"
+            android:text="       我是春天山坡上的一棵树。" />
+
+        <TextView
+            android:id="@+id/text_answer_editor"
+            style="@style/ParagraphStyle"
+            android:layout_marginTop="15dp"
+            android:text="（责任编辑：夏知花落）" />
+
+        <com.uphie.one.widgets.LikeView
+            android:id="@+id/liv_saying"
+            style="@style/LikeViewStyle" />
+
+    </LinearLayout>
+</ScrollView>

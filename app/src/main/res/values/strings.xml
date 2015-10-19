@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">一个</string>
+
+    <string name="tab_home">首页</string>
+    <string name="tab_article">文章</string>
+    <string name="tab_question">问题</string>
+    <string name="tab_thing">东西</string>
+    <string name="tab_personal">个人</string>
+
+    <string name="item_about">关于</string>
+    <string name="item_comment">评分</string>
+
+    <string name="about_content">当初次接触到“一个”时，内心是很欣喜的，因为很少见到过简洁漂亮不讨人厌的Android App，内容的形式也很新。
+        后面的“一个”屡次更新，渐渐有了广告，界面也没有以前的漂亮。
+        虽然对于“一个”的盈利发展和形象更新表示理解，但我还是留恋最初的“一个”。</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">一個</string>
+
+    <string name="tab_home">首頁</string>
+    <string name="tab_article">文章</string>
+    <string name="tab_question">問題</string>
+    <string name="tab_thing">東西</string>
+    <string name="tab_personal">個人</string>
+
+    <string name="item_about">關於</string>
+    <string name="item_comment">評分</string>
+</resources>

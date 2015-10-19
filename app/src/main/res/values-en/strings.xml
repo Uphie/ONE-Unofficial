@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">One</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_article">Article</string>
+    <string name="tab_question">Question</string>
+    <string name="tab_thing">Thing</string>
+    <string name="tab_personal">Personal</string>
+
+    <string name="item_about">About</string>
+    <string name="item_comment">Comment</string>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@drawable/actionbar"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_title" />
+
+        <TextView
+            android:id="@+id/action_bar_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/ic_more" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RadioGroup
+        android:id="@+id/tab_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:checkedButton="@+id/tab_home"
+        android:orientation="horizontal">
+
+        <com.uphie.one.widgets.Tab
+            android:id="@+id/tab_home"
+            style="@style/TabStyle"
+            android:checked="true"
+            android:text="@string/tab_home" />
+
+        <com.uphie.one.widgets.Tab
+            android:id="@+id/tab_article"
+            style="@style/TabStyle"
+            android:text="@string/tab_article" />
+
+        <com.uphie.one.widgets.Tab
+            android:id="@+id/tab_question"
+            style="@style/TabStyle"
+            android:text="@string/tab_question" />
+
+        <com.uphie.one.widgets.Tab
+            android:id="@+id/tab_thing"
+            style="@style/TabStyle"
+            android:text="@string/tab_thing" />
+
+        <com.uphie.one.widgets.Tab
+            android:id="@+id/tab_personal"
+            style="@style/TabStyle"
+            android:text="@string/tab_personal" />
+
+    </RadioGroup>
+</LinearLayout>
