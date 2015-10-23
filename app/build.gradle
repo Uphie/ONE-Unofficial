@@ -26,4 +26,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.facebook.fresco:fresco:0.7.0+'
+    //友盟统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

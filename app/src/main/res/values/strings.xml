@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">一个</string>
 
+    <string name="github_project">https://github.com/Uphie/ONE-Unofficial</string>
+
     <string name="tab_home">首页</string>
     <string name="tab_article">文章</string>
     <string name="tab_question">问题</string>

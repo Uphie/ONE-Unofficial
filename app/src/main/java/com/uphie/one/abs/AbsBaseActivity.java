@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.umeng.analytics.MobclickAgent;
 import com.uphie.one.common.HttpClient;
 import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
@@ -21,6 +22,7 @@ import com.uphie.one.interfaces.IHttp;
 import com.uphie.one.interfaces.IInit;
 import com.uphie.one.interfaces.OnNetConnChangeListener;
 import com.uphie.one.utils.NetworkUtil;
+import com.uphie.one.utils.TextToast;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -32,14 +34,14 @@ import butterknife.ButterKnife;
  * Created by Uphie on 2015/9/5.
  * Email: uphie7@gmail.com
  */
-public abstract class AbsBaseActivity extends Activity implements IHttp,IInit, OnNetConnChangeListener {
+public abstract class AbsBaseActivity extends Activity implements IInit, IHttp, OnNetConnChangeListener {
     private InputMethodManager softManager;
     private NetworkStateChangeReceiver mNetworkStateChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getLayoutId()==0){
+        if (getLayoutId() == 0) {
             return;
         }
         setContentView(getLayoutId());
@@ -56,7 +58,7 @@ public abstract class AbsBaseActivity extends Activity implements IHttp,IInit, O
     }
 
     @Override
-    public void getHttpData(final String url, RequestParams params,final HttpData httpData) {
+    public void getHttpData(final String url, RequestParams params, final HttpData httpData) {
 
         HttpClient.postByForm(url, params, new TextHttpResponseHandler() {
 
@@ -66,7 +68,7 @@ public abstract class AbsBaseActivity extends Activity implements IHttp,IInit, O
                     try {
                         JSONObject jsonObject = new JSONObject(responseString);
 
-                        if (httpData==null){
+                        if (httpData == null) {
                             return;
                         }
                         String success = jsonObject.optString(httpData.result);
@@ -94,8 +96,14 @@ public abstract class AbsBaseActivity extends Activity implements IHttp,IInit, O
         });
     }
 
+    @Override
+    public void onNetworkDisconnected() {
+        TextToast.shortShow("网络连接异常");
+    }
+
     /**
      * 是否应该隐藏软键盘
+     *
      * @param v
      * @param event
      * @return
@@ -137,6 +145,7 @@ public abstract class AbsBaseActivity extends Activity implements IHttp,IInit, O
         }
         return onTouchEvent(ev);
     }
+
 
     @Override
     protected void onDestroy() {

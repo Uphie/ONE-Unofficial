@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
 import com.uphie.one.R;
 import com.uphie.one.abs.FragmentAdapter;
 import com.uphie.one.common.Api;
@@ -71,6 +72,7 @@ public class ArticleFragment extends Fragment implements ViewPager.OnPageChangeL
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart("ArticlePage");
         //如果首页的日期与当前不符，即数据过期，刷新数据。可能有bug
         if (firstArticleDate!=null&&!firstArticleDate.equals(TimeUtil.getDate())) {
 
@@ -94,6 +96,12 @@ public class ArticleFragment extends Fragment implements ViewPager.OnPageChangeL
 
             adapter.replaceAll(list);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("ArticlePage");
     }
 
     @Override

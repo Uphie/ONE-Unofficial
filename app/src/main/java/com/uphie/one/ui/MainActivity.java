@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.uphie.one.R;
 import com.uphie.one.common.App;
 import com.uphie.one.ui.article.ArticleFragment;
@@ -16,6 +18,7 @@ import com.uphie.one.ui.personal.PersonalFragment;
 import com.uphie.one.ui.question.QuestionFragment;
 import com.uphie.one.ui.thing.ThingFragment;
 import com.uphie.one.utils.SysUtil;
+import com.uphie.one.utils.TextToast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,6 +42,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private FragmentManager fragmentManager;
 
+    private long curTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,37 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.main_content, homeFragment);
         transaction.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainPage");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainPage");
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            //三秒之内的连续按返回键视为退出，防止误操作
+            if (System.currentTimeMillis()-curTime<3000){
+                finish();
+                MobclickAgent.onKillProcess(this);
+                System.exit(0);
+            }else {
+                TextToast.shortShow("再按一次退出");
+                curTime=System.currentTimeMillis();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

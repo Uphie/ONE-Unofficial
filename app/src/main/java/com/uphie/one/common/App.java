@@ -26,4 +26,6 @@ public class App extends Application {
         NetworkUtil.init(this);
         TextToast.init(this);
     }
+
+
 }
