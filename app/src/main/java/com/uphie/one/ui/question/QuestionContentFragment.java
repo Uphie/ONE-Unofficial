@@ -19,6 +19,9 @@ import com.uphie.one.utils.JsonUtil;
 import com.uphie.one.utils.TimeUtil;
 import com.uphie.one.widgets.LikeView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -38,12 +41,17 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
     TextView textAnswerTitle;
     @Bind(R.id.text_answer_content)
     TextView textAnswerContent;
-    @Bind(R.id.liv_saying)
-    LikeView lvSaying;
+    @Bind(R.id.liv_question)
+    LikeView lvQuestion;
     @Bind(R.id.question_content)
     LinearLayout questionContent;
     @Bind(R.id.text_answer_editor)
     TextView textAnswerEditor;
+
+    /**
+     * 当前的问题
+     */
+    private Question curQuestion;
 
     @Override
     public int getLayoutId() {
@@ -53,7 +61,7 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
     @Override
     public void init() {
 
-        lvSaying.addOnLikeChangeListener(this);
+        lvQuestion.addOnLikeChangeListener(this);
 
         Bundle bundle = getArguments();
         String date = bundle.getString(Constants.KEY_DATE);
@@ -73,6 +81,8 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
                 if (question == null) {
                     return;
                 }
+                curQuestion=question;
+
                 questionContent.setVisibility(View.VISIBLE);
 
                 textQuestionDate.setText(TimeUtil.getEngDate(question.strQuestionMarketTime));
@@ -81,7 +91,19 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
                 textAnswerTitle.setText(question.strAnswerTitle);
                 textAnswerContent.setText(Html.fromHtml(question.strAnswerContent));
                 textAnswerEditor.setText(question.sEditor);
-                lvSaying.setText(question.strPraiseNumber + "");
+                lvQuestion.setText(question.strPraiseNumber + "");
+                break;
+            case Api.URL_LIKE_OR_CANCLELIKE:
+                try {
+                    JSONObject jsonObject=new JSONObject(data);
+                    int likeCount=jsonObject.optInt("strPraisednumber");
+                    //若实际的喜欢数量与LikeView自增的结果值不同，显示实际的数量
+                    if (likeCount!=lvQuestion.getLikeCount()){
+                        lvQuestion.setText(likeCount+"");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -99,8 +121,14 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
     }
 
     @Override
-    public void onLiked(boolean like) {
+    public void onLikeChanged() {
         RequestParams requestParams = new RequestParams();
+        requestParams.put("strPraiseItemId", curQuestion.strQuestionId);
+        //我不清楚strDeviceId为什么标识符，格式为“ffffffff-9248-aa0c-ffff-ffffaea9cc69”
+        requestParams.put("strDeviceId", "");
+        requestParams.put("strAppName", "ONE");
+        requestParams.put("strPraiseItem", "QUESTION");
+        getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
     }
 
 }

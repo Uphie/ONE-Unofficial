@@ -63,15 +63,19 @@ public class LikeView extends CheckBox implements CompoundButton.OnCheckedChange
         this.onLikeChangedListener = onLikeChangedListener;
     }
 
+    public int getLikeCount(){
+        return likeCount;
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         refresh(isChecked);
         if (onLikeChangedListener != null) {
-            onLikeChangedListener.onLiked(isChecked);
+            onLikeChangedListener.onLikeChanged();
         }
     }
 
     public interface OnLikeChangedListener {
-        void onLiked(boolean like);
+        void onLikeChanged();
     }
 }

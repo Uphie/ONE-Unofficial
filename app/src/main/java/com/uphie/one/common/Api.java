@@ -21,4 +21,8 @@ public class Api {
      * 东西
      */
     public static final String URL_THING = "http://rest.wufazhuce.com/OneForWeb/one/o_f";
+    /**
+     * 喜欢/取消喜欢
+     */
+    public static final String URL_LIKE_OR_CANCLELIKE = "http://bea.wufazhuce.com/OneForWeb/onest/praiseAppItemSomeId";
 }

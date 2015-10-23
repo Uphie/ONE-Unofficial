@@ -29,6 +29,9 @@ import com.uphie.one.utils.TextToast;
 import com.uphie.one.utils.TimeUtil;
 import com.uphie.one.widgets.LikeView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -51,9 +54,11 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
     @Bind(R.id.home_content)
     LinearLayout homeContent;
     @Bind(R.id.liv_saying)
-    LikeView like_Saying;
+    LikeView lvSaying;
     @Bind(R.id.dv_illustrator)
     SimpleDraweeView dvIllustrator;
+
+    private Home curSaying;
 
     @Override
     public int getLayoutId() {
@@ -63,7 +68,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
     @Override
     public void init() {
 
-        like_Saying.addOnLikeChangeListener(this);
+        lvSaying.addOnLikeChangeListener(this);
 
         Bundle bundle = getArguments();
         String date = bundle.getString(Constants.KEY_DATE);
@@ -83,6 +88,8 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                 if (home == null) {
                     return;
                 }
+                curSaying=home;
+
                 homeContent.setVisibility(View.VISIBLE);
 
                 //标题，如 VOL.1997
@@ -96,7 +103,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                 //内容
                 textSaying.setText(home.strContent);
                 //喜欢的数量
-                like_Saying.setText(home.strPn);
+                lvSaying.setText(home.strPn);
                 //插画
 
                 ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
@@ -127,6 +134,18 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                         .build();
                 dvIllustrator.setController(controller);
                 break;
+            case Api.URL_LIKE_OR_CANCLELIKE:
+                try {
+                    JSONObject jsonObject=new JSONObject(data);
+                    int likeCount=jsonObject.optInt("strPraisednumber");
+                    //若实际的喜欢数量与LikeView自增的结果值不同，显示实际的数量
+                    if (likeCount!=lvSaying.getLikeCount()){
+                        lvSaying.setText(likeCount+"");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
@@ -143,8 +162,13 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
     }
 
     @Override
-    public void onLiked(boolean like) {
+    public void onLikeChanged() {
         RequestParams requestParams = new RequestParams();
+        requestParams.put("strPraiseItemId", curSaying.strHpId);
+        requestParams.put("strDeviceId","" );
+        requestParams.put("strAppName", "ONE");
+        requestParams.put("strPraiseItem", "HP");
+        getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
     }
 
 }

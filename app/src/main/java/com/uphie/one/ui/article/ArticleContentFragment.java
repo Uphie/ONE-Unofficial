@@ -17,6 +17,10 @@ import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
 import com.uphie.one.utils.JsonUtil;
 import com.uphie.one.utils.TimeUtil;
+import com.uphie.one.widgets.LikeView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by Uphie on 2015/9/6.
  * Email: uphie7@gmail.com
  */
-public class ArticleContentFragment extends AbsBaseFragment implements View.OnClickListener {
+public class ArticleContentFragment extends AbsBaseFragment implements LikeView.OnLikeChangedListener {
 
     @Bind(R.id.text_article_date)
     TextView textArticleDate;
@@ -37,8 +41,6 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
     TextView text_ArticleContent;
     @Bind(R.id.text_article_editor)
     TextView text_ArticleEditor;
-    @Bind(R.id.text_like_article)
-    TextView text_LikeArticle;
     @Bind(R.id.text_article_author_addition)
     TextView text_ArticleAuthorAddition;
     @Bind(R.id.text_article_author_weibo)
@@ -47,6 +49,10 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
     TextView text_ArticleAuthorIntro;
     @Bind(R.id.article_content)
     LinearLayout articleContent;
+    @Bind(R.id.liv_article)
+    LikeView lvArticle;
+
+    private Article curArticle;
 
     @Override
     public int getLayoutId() {
@@ -56,7 +62,8 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
     @Override
     public void init() {
 
-        text_LikeArticle.setOnClickListener(this);
+        lvArticle.addOnLikeChangeListener(this);
+
         Bundle bundle = getArguments();
         String date = bundle.getString(Constants.KEY_DATE);
         int index = bundle.getInt(Constants.KEY_INDEX);
@@ -65,9 +72,7 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
         params.put("strMS", 1);
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_ARTICLE, params,new HttpData("result", "contentEntity"));
-
-
+        getHttpData(Api.URL_ARTICLE, params, new HttpData("result", "contentEntity"));
     }
 
     @Override
@@ -78,6 +83,8 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
                 if (article == null) {
                     return;
                 }
+                curArticle=article;
+
                 articleContent.setVisibility(View.VISIBLE);
                 //上架日期
                 textArticleDate.setText(TimeUtil.getEngDate(article.strContMarketTime));
@@ -90,7 +97,7 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
                 //责任编辑
                 text_ArticleEditor.setText(article.strContAuthorIntroduce);
                 //喜欢的数量
-                text_LikeArticle.setText(article.strPraiseNumber);
+                lvArticle.setText(article.strPraiseNumber);
                 //作者
                 text_ArticleAuthorAddition.setText(article.strContAuthor);
                 //微博名
@@ -98,12 +105,24 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
                 //作者简介
                 text_ArticleAuthorIntro.setText(article.sAuth);
                 break;
+            case Api.URL_LIKE_OR_CANCLELIKE:
+                try {
+                    JSONObject jsonObject=new JSONObject(data);
+                    int likeCount=jsonObject.optInt("strPraisednumber");
+                    //若实际的喜欢数量与LikeView自增的结果值不同，显示实际的数量
+                    if (likeCount!=lvArticle.getLikeCount()){
+                        lvArticle.setText(likeCount+"");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
     @Override
     public void onDataError(String url, HttpError error) {
-        switch (url){
+        switch (url) {
             case Api.URL_ARTICLE:
                 //没有数据，删除并销毁自己
                 ArticleFragment.adapter.removeLast();
@@ -114,11 +133,13 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.text_like_article:
-
-                break;
-        }
+    public void onLikeChanged() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("strPraiseItemId", curArticle.strContentId);
+        requestParams.put("strDeviceId", "");
+        requestParams.put("strAppName", "ONE");
+        requestParams.put("strPraiseItem", "CONTENT");
+        getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
     }
+
 }

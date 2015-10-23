@@ -61,16 +61,9 @@
             android:textColor="#525355"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/text_like_article"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_like"
-            android:drawablePadding="10dp"
-            android:text="211" />
+        <com.uphie.one.widgets.LikeView
+            android:id="@+id/liv_article"
+            style="@style/LikeViewStyle" />
 
         <View
             android:layout_width="match_parent"
