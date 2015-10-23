@@ -61,11 +61,6 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
     }
 
     @Override
-    public HttpData getDataStructure() {
-        return new HttpData("result", "hpEntity");
-    }
-
-    @Override
     public void init() {
 
         like_Saying.addOnLikeChangeListener(this);
@@ -77,7 +72,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         RequestParams params = new RequestParams();
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_HOME, params);
+        getHttpData(Api.URL_HOME, params,new HttpData("result", "hpEntity"));
     }
 
     @Override

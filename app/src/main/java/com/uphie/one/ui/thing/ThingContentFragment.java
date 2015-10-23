@@ -52,11 +52,6 @@ public class ThingContentFragment extends AbsBaseFragment {
     }
 
     @Override
-    public HttpData getDataStructure() {
-        return new HttpData("rs", "entTg");
-    }
-
-    @Override
     public void init() {
 
         Bundle bundle = getArguments();
@@ -66,7 +61,7 @@ public class ThingContentFragment extends AbsBaseFragment {
         RequestParams params = new RequestParams();
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_THING, params);
+        getHttpData(Api.URL_THING, params, new HttpData("rs", "entTg"));
     }
 
     @Override

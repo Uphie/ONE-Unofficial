@@ -8,8 +8,5 @@ import com.uphie.one.common.HttpData;
  */
 public interface IInit {
     int getLayoutId();
-
-    HttpData getDataStructure();
-
     void init();
 }

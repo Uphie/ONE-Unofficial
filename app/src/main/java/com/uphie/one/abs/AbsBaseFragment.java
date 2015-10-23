@@ -52,7 +52,7 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
     }
 
     @Override
-    public void getHttpData(final String url, RequestParams params) {
+    public void getHttpData(final String url, RequestParams params, final HttpData httpData) {
 
         HttpClient.postByForm(url, params, new TextHttpResponseHandler() {
 
@@ -68,7 +68,6 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
                     try {
                         JSONObject jsonObject = new JSONObject(responseString);
 
-                        HttpData httpData = getDataStructure();
                         if (httpData == null) {
                             return;
                         }

@@ -1,6 +1,7 @@
 package com.uphie.one.interfaces;
 
 import com.loopj.android.http.RequestParams;
+import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
 
 /**
@@ -9,7 +10,7 @@ import com.uphie.one.common.HttpError;
  */
 public interface IHttp {
 
-    void getHttpData(String url, RequestParams param);
+    void getHttpData(String url, RequestParams param,HttpData httpData);
 
     void onDataOk(String url, String data);
 

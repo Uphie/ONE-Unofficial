@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
  */
 public class QuestionContentFragment extends AbsBaseFragment implements LikeView.OnLikeChangedListener {
 
-
     @Bind(R.id.text_question_date)
     TextView textQuestionDate;
     @Bind(R.id.text_question_title)
@@ -52,11 +51,6 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
     }
 
     @Override
-    public HttpData getDataStructure() {
-        return new HttpData("result", "questionAdEntity");
-    }
-
-    @Override
     public void init() {
 
         lvSaying.addOnLikeChangeListener(this);
@@ -68,7 +62,7 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
         RequestParams params = new RequestParams();
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_QUESTION, params);
+        getHttpData(Api.URL_QUESTION, params,new HttpData("result", "questionAdEntity"));
     }
 
     @Override

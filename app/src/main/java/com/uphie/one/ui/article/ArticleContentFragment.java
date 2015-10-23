@@ -54,11 +54,6 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
     }
 
     @Override
-    public HttpData getDataStructure() {
-        return new HttpData("result", "contentEntity");
-    }
-
-    @Override
     public void init() {
 
         text_LikeArticle.setOnClickListener(this);
@@ -70,7 +65,7 @@ public class ArticleContentFragment extends AbsBaseFragment implements View.OnCl
         params.put("strMS", 1);
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_ARTICLE, params);
+        getHttpData(Api.URL_ARTICLE, params,new HttpData("result", "contentEntity"));
 
 
     }
