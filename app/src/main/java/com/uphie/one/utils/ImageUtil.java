@@ -3,6 +3,10 @@ package com.uphie.one.utils;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.facebook.cache.disk.DiskCacheConfig;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,24 +24,12 @@ import java.io.File;
  */
 public class ImageUtil {
 
-    private static ImageLoader imageLoader;
-    private static ImageLoaderConfiguration config;
-    private static DisplayImageOptions options;
+    public static void init(Context context) {
+        File cacheDir = new File(FileManager.getAppDir());
 
-    public static void init(Context context, String cachePath) {
-        File cacheDir = new File(cachePath);
-        imageLoader = ImageLoader.getInstance();
-        config = new ImageLoaderConfiguration.Builder(context).threadPoolSize(4)
-                .diskCache(new UnlimitedDiskCache(cacheDir)).build();
-        //考虑Exif信息，磁盘缓存，内存缓存，图片质量为considerExifParams，300ms渐进显示
-        options = new DisplayImageOptions.Builder().considerExifParams(true).cacheOnDisk(true).cacheInMemory(true).imageScaleType(ImageScaleType.IN_SAMPLE_INT).displayer(new FadeInBitmapDisplayer(300)).build();
-        imageLoader.init(config);
-    }
-
-    public static void showImage(String url, ImageView imageView) {
-        imageLoader.displayImage(url, imageView, options);
-    }
-    public static void showImageWithProgress(String url, ImageView imageView, SimpleImageLoadingListener simpleImageLoadingListener) {
-        imageLoader.displayImage(url, imageView, options,simpleImageLoadingListener);
+        //Fresco配置和初始化
+        DiskCacheConfig diskCacheConfig=DiskCacheConfig.newBuilder().setBaseDirectoryPath(cacheDir).setBaseDirectoryName(FileManager.DIR_PIC_CACHE).build();
+        ImagePipelineConfig imagePipelineConfig= ImagePipelineConfig.newBuilder(context).setMainDiskCacheConfig(diskCacheConfig).build();
+        Fresco.initialize(context,imagePipelineConfig);
     }
 }

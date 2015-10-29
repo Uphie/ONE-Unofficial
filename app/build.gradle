@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.uphie.one"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -22,10 +22,15 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
+//    compile 'com.android.support:support-v4:22+'
     compile 'com.loopj.android:android-async-http:1.4.5'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.facebook.fresco:fresco:0.7.0+'
     //友盟统计
     compile 'com.umeng.analytics:analytics:latest.integration'
+    //友盟反馈
+//    compile 'com.umeng:fb:5.4.0'
+    //facebook
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
 }

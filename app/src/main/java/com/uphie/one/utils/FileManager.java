@@ -10,27 +10,29 @@ import java.io.File;
  */
 public class FileManager {
 
-    private static String dir_imgCache;
+    public static final String DIR_PIC_CACHE="img";
+    private static String appDir;
 
     /**
      * 获得图片缓存路径
      * @return
      */
-    public static String getImgTempDir() {
-        if (dir_imgCache == null) {
+    public static String getAppDir() {
+        if (appDir == null) {
             if (SysUtil.isSdExist()) {
-                dir_imgCache = Environment.getExternalStorageDirectory()
-                        .getAbsolutePath() + "/One/img";
+                appDir = Environment.getExternalStorageDirectory()
+                        .getAbsolutePath() + "/One";
             } else {
-                dir_imgCache = Environment.getRootDirectory()
-                        .getAbsolutePath() + "/One/img";
+                appDir = Environment.getRootDirectory()
+                        .getAbsolutePath() + "/One";
             }
         } else {
-            File file = new File(dir_imgCache);
+            File file = new File(appDir);
             if (!file.exists()) {
                 file.mkdirs();
             }
         }
-        return dir_imgCache;
+        return appDir;
     }
+
 }

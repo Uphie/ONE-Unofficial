@@ -21,8 +21,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Fresco.initialize(this);
-        ImageUtil.init(this, FileManager.getImgTempDir());
+        ImageUtil.init(this);
         NetworkUtil.init(this);
         TextToast.init(this);
     }
