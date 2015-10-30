@@ -1,50 +1,34 @@
 package com.uphie.one.ui.home;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.umeng.analytics.MobclickAgent;
 import com.uphie.one.R;
+import com.uphie.one.abs.AbsModuleFragment;
 import com.uphie.one.abs.FragmentAdapter;
 import com.uphie.one.common.Constants;
-import com.uphie.one.ui.article.ArticleContentFragment;
 import com.uphie.one.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * Created by Uphie on 2015/9/6.
  * Email: uphie7@gmail.com
  */
-public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
-
-    @Bind(R.id.pager)
-    ViewPager pager;
+public class HomeFragment extends AbsModuleFragment {
 
     public static FragmentAdapter adapter;
     private String firstHomeDate;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, null);
-        ButterKnife.bind(this, view);
-        init();
-        return view;
+    public int getLayoutId() {
+        return R.layout.fragment_home;
     }
 
-    private void init() {
-        pager.addOnPageChangeListener(this);
-
+    @Override
+    public void init() {
         //先展示当天的首页
         Bundle bundle1 = new Bundle();
         bundle1.putString(Constants.KEY_DATE, TimeUtil.getDate());
@@ -72,7 +56,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         super.onResume();
         MobclickAgent.onPageStart("HomePage");
         //如果首页的日期与当前不符，即数据过期，刷新数据。可能有bug
-        if (firstHomeDate!=null&&!firstHomeDate.equals(TimeUtil.getDate())) {
+        if (firstHomeDate != null && !firstHomeDate.equals(TimeUtil.getDate())) {
 
             Bundle bundle1 = new Bundle();
             bundle1.putString(Constants.KEY_DATE, TimeUtil.getDate());
@@ -103,17 +87,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
     public void onPageSelected(int position) {
         //当前某一个位置已经被选择了
 
@@ -129,8 +102,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         }
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
+    public Home getCurSaying() {
+        return ((HomeContentFragment)adapter.getItem(pager.getCurrentItem())).getContentData();
     }
 }

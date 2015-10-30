@@ -3,6 +3,7 @@ package com.uphie.one.common;
 import android.app.Application;
 import android.util.DisplayMetrics;
 
+import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.uphie.one.utils.FileManager;
 import com.uphie.one.utils.ImageUtil;
@@ -20,7 +21,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
         ImageUtil.init(this);
         NetworkUtil.init(this);
         TextToast.init(this);

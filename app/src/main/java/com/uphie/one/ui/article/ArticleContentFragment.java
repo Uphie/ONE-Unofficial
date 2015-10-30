@@ -142,4 +142,8 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
         getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
     }
 
+
+    public Article getContentData() {
+        return curArticle;
+    }
 }

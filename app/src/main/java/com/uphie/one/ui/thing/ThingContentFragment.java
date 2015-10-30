@@ -22,6 +22,7 @@ import com.uphie.one.common.Api;
 import com.uphie.one.common.Constants;
 import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
+import com.uphie.one.ui.article.Article;
 import com.uphie.one.utils.JsonUtil;
 import com.uphie.one.utils.TextToast;
 import com.uphie.one.utils.TimeUtil;
@@ -45,6 +46,8 @@ public class ThingContentFragment extends AbsBaseFragment {
     TextView textThingIntro;
     @Bind(R.id.thing_content)
     LinearLayout thingContent;
+
+    private Thing curThing;
 
     @Override
     public int getLayoutId() {
@@ -122,5 +125,7 @@ public class ThingContentFragment extends AbsBaseFragment {
                 break;
         }
     }
-
+    public Thing getContentData() {
+        return curThing;
+    }
 }

@@ -10,20 +10,20 @@ import java.util.List;
  * Created by Uphie on 2015/9/6.
  * Email: uphie7@gmail.com
  */
-public class FragmentAdapter extends android.support.v4.app.FragmentPagerAdapter {
+public class FragmentAdapter<T extends Fragment> extends android.support.v4.app.FragmentPagerAdapter {
 
-    private List<Fragment> fragmentList;
+    private List<T> fragmentList;
     private boolean canLoadMore = true;
 
-    public FragmentAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public FragmentAdapter(FragmentManager fm, List<T> fragmentList) {
         super(fm);
-        this.fragmentList = fragmentList == null ? new ArrayList<Fragment>() : fragmentList;
+        this.fragmentList = fragmentList == null ? new ArrayList<T>() : fragmentList;
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public T getItem(int position) {
         if (fragmentList.size() > 0 && fragmentList.size() > position) {
-            return fragmentList.get(position);
+            return (T)(fragmentList.get(position));
         }
         return null;
     }
@@ -42,7 +42,7 @@ public class FragmentAdapter extends android.support.v4.app.FragmentPagerAdapter
      *
      * @param fragment
      */
-    public void add(Fragment fragment) {
+    public void add(T fragment) {
         fragmentList.add(fragment);
         notifyDataSetChanged();
     }
@@ -52,7 +52,7 @@ public class FragmentAdapter extends android.support.v4.app.FragmentPagerAdapter
      *
      * @param fragmentList
      */
-    public void updateAll(List<Fragment> fragmentList) {
+    public void updateAll(List<T> fragmentList) {
         fragmentList.clear();
         fragmentList.addAll(fragmentList);
         notifyDataSetChanged();
@@ -72,7 +72,7 @@ public class FragmentAdapter extends android.support.v4.app.FragmentPagerAdapter
      *
      * @param newFragments
      */
-    public void replaceAll(List<Fragment> newFragments) {
+    public void replaceAll(List<T> newFragments) {
         fragmentList.clear();
         fragmentList.addAll(newFragments);
         notifyDataSetChanged();

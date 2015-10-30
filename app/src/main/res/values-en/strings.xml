@@ -7,6 +7,19 @@
     <string name="tab_thing">Thing</string>
     <string name="tab_personal">Personal</string>
 
+    <string name="cancel">Cancle</string>
+
+    <string name="share_facebook">Facebook</string>
+    <string name="share_twitter">Twitter</string>
+    <string name="share_wechat">Facebook</string>
+    <string name="share_weibo">Weibo</string>
+    <string name="share_qq">QQ</string>
+    <string name="share_qzone">Q Zone</string>
+
+    <string name="not_support_share">Not support sharing on this platform because of lack of developer account.</string>
+    <string name="share_fail">Share failed</string>
+
     <string name="item_about">About</string>
     <string name="item_comment">Comment</string>
+    <string name="item_feedback">Feedback</string>
 </resources>

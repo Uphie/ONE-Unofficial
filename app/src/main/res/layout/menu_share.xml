@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:background="@drawable/share_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/share_facebook"
+                style="@style/ShareItemStyle"
+                android:drawableTop="@drawable/logo_facebook"
+                android:text="@string/share_facebook" />
+
+            <TextView
+                android:id="@+id/share_twitter"
+                style="@style/ShareItemStyle"
+                android:drawableTop="@drawable/logo_twitter"
+                android:text="@string/share_twitter" />
+
+            <TextView
+                android:id="@+id/share_wechat"
+                style="@style/ShareItemStyle"
+                android:drawableTop="@drawable/logo_wechat"
+                android:text="@string/share_wechat" />
+
+            <TextView
+                android:id="@+id/share_weibo"
+                style="@style/ShareItemStyle"
+                android:drawableTop="@drawable/logo_sinaweibo"
+                android:text="@string/share_weibo" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/share_qq"
+                style="@style/ShareItemStyle"
+                android:drawableTop="@drawable/logo_qq"
+                android:text="@string/share_qq" />
+
+            <TextView
+                android:id="@+id/share_qzone"
+                style="@style/ShareItemStyle"
+                android:drawableTop="@drawable/logo_qzone"
+                android:text="@string/share_qzone" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:id="@+id/btn_cancel"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+</LinearLayout>

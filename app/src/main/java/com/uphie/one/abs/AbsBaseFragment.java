@@ -123,4 +123,6 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
             }
         }
     }
+
+    public abstract  <T> T getContentData();
 }

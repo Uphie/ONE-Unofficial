@@ -7,6 +7,19 @@
     <string name="tab_thing">東西</string>
     <string name="tab_personal">個人</string>
 
+    <string name="cancel">取消</string>
+
+    <string name="share_facebook">臉書</string>
+    <string name="share_twitter">推特</string>
+    <string name="share_wechat">微信</string>
+    <string name="share_weibo">微博</string>
+    <string name="share_qq">QQ</string>
+    <string name="share_qzone">QQ空間</string>
+
+    <string name="not_support_share">暫不支持該平台分享，因為缺少該平台下的開發者賬戶。</string>
+    <string name="share_fail">分享失敗</string>
+
     <string name="item_about">關於</string>
     <string name="item_comment">評分</string>
+    <string name="item_feedback">意見回饋</string>
 </resources>

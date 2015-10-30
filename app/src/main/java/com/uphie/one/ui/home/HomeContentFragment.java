@@ -23,6 +23,7 @@ import com.uphie.one.common.Api;
 import com.uphie.one.common.Constants;
 import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
+import com.uphie.one.ui.article.Article;
 import com.uphie.one.ui.article.ArticleFragment;
 import com.uphie.one.utils.JsonUtil;
 import com.uphie.one.utils.TextToast;
@@ -171,4 +172,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         getHttpData(Api.URL_LIKE_OR_CANCLELIKE, requestParams, new HttpData("result", "entPraise"));
     }
 
+    public Home getContentData() {
+        return curSaying;
+    }
 }

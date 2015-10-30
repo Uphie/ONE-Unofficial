@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.umeng.analytics.MobclickAgent;
 import com.uphie.one.R;
+import com.uphie.one.abs.AbsModuleFragment;
 import com.uphie.one.abs.FragmentAdapter;
 import com.uphie.one.common.Constants;
+import com.uphie.one.ui.article.Article;
+import com.uphie.one.ui.article.ArticleContentFragment;
 import com.uphie.one.ui.home.HomeContentFragment;
 import com.uphie.one.utils.TimeUtil;
 
@@ -25,25 +28,18 @@ import butterknife.ButterKnife;
  * Created by Uphie on 2015/9/6.
  * Email: uphie7@gmail.com
  */
-public class QuestionFragment extends Fragment implements ViewPager.OnPageChangeListener{
-
-
-    @Bind(R.id.pager)
-    ViewPager pager;
+public class QuestionFragment extends AbsModuleFragment implements ViewPager.OnPageChangeListener {
 
     public static FragmentAdapter adapter;
     private String firstQuestionDate;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_question, null);
-        ButterKnife.bind(this, view);
-        init();
-        return view;
+    public int getLayoutId() {
+        return R.layout.fragment_question;
     }
 
-    private void init() {
+    @Override
+    public void init() {
         pager.addOnPageChangeListener(this);
 
         //先展示当天的首页
@@ -69,11 +65,6 @@ public class QuestionFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
     public void onPageSelected(int position) {
         //当当前页为viewpager的最后一页时，加载下一页
         if (adapter.getCount() == position + 1) {
@@ -88,16 +79,11 @@ public class QuestionFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("QuestionPage");
         //如果首页的日期与当前不符，即数据过期，刷新数据。可能有bug
-        if (firstQuestionDate!=null&&!firstQuestionDate.equals(TimeUtil.getDate())) {
+        if (firstQuestionDate != null && !firstQuestionDate.equals(TimeUtil.getDate())) {
 
             Bundle bundle1 = new Bundle();
             bundle1.putString(Constants.KEY_DATE, TimeUtil.getDate());
@@ -127,10 +113,7 @@ public class QuestionFragment extends Fragment implements ViewPager.OnPageChange
         MobclickAgent.onPageEnd("QuestionPage");
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public Question getCurQuestion() {
+        return ((QuestionContentFragment) adapter.getItem(pager.getCurrentItem())).getContentData();
     }
-
 }

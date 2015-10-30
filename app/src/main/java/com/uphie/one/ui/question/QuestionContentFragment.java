@@ -15,6 +15,7 @@ import com.uphie.one.common.Api;
 import com.uphie.one.common.Constants;
 import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
+import com.uphie.one.ui.article.Article;
 import com.uphie.one.utils.JsonUtil;
 import com.uphie.one.utils.TimeUtil;
 import com.uphie.one.widgets.LikeView;
@@ -131,4 +132,7 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
         getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
     }
 
+    public Question getContentData() {
+        return curQuestion;
+    }
 }

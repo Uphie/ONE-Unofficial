@@ -45,4 +45,17 @@
         <item name="android:drawableRight">@drawable/ic_to</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <style name="ShareItemStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
+    
+    <style name="FadeStyle">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+    </style>
 </resources>

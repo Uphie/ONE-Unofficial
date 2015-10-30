@@ -9,10 +9,23 @@
     <string name="tab_thing">东西</string>
     <string name="tab_personal">个人</string>
 
+    <string name="cancel">取消</string>
+
+    <string name="share_facebook">脸书</string>
+    <string name="share_twitter">推特</string>
+    <string name="share_wechat">微信</string>
+    <string name="share_weibo">微博</string>
+    <string name="share_qq">QQ</string>
+    <string name="share_qzone">QQ空间</string>
+
+    <string name="not_support_share">暂不支持该平台分享，因为缺少该平台下的开发者账户。</string>
+    <string name="share_fail">分享失败</string>
+
     <string name="item_about">关于</string>
     <string name="item_comment">评分</string>
+    <string name="item_feedback">意见反馈</string>
 
-    <string name="about_content">当初次接触到“一个”时，内心是很欣喜的，因为很少见到过简洁漂亮不讨人厌的Android App，内容的形式也很新。
-        后面的“一个”屡次更新，渐渐有了广告，界面也没有以前的漂亮。
-        虽然对于“一个”的盈利发展和形象更新表示理解，但我还是留恋最初的“一个”。</string>
+    <string name="appid_facebook">436696993183527</string>
+    <string name="appkey_umeng">5629c63be0f55a886b00488f</string>
+
 </resources>

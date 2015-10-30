@@ -1,51 +1,34 @@
 package com.uphie.one.ui.article;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.umeng.analytics.MobclickAgent;
 import com.uphie.one.R;
 import com.uphie.one.abs.FragmentAdapter;
-import com.uphie.one.common.Api;
+import com.uphie.one.abs.AbsModuleFragment;
 import com.uphie.one.common.Constants;
-import com.uphie.one.utils.TextToast;
 import com.uphie.one.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * Created by Uphie on 2015/9/6.
  * Email: uphie7@gmail.com
  */
-public class ArticleFragment extends Fragment implements ViewPager.OnPageChangeListener {
-
-    @Bind(R.id.pager)
-    ViewPager pager;
+public class ArticleFragment extends AbsModuleFragment {
 
     public static FragmentAdapter adapter;
-    private String firstArticleDate ;
+    private String firstArticleDate;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_article, null);
-        ButterKnife.bind(this, view);
-        init();
-        return view;
+    public int getLayoutId() {
+        return R.layout.fragment_article;
     }
 
-    private void init() {
-        pager.addOnPageChangeListener(this);
-
+    @Override
+    public void init() {
         //先展示当天的文章
         Bundle bundle1 = new Bundle();
         bundle1.putString(Constants.KEY_DATE, TimeUtil.getDate());
@@ -65,16 +48,15 @@ public class ArticleFragment extends Fragment implements ViewPager.OnPageChangeL
         adapter = new FragmentAdapter(getChildFragmentManager(), list);
         pager.setAdapter(adapter);
 
-        firstArticleDate=TimeUtil.getDate();
+        firstArticleDate = TimeUtil.getDate();
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("ArticlePage");
         //如果首页的日期与当前不符，即数据过期，刷新数据。可能有bug
-        if (firstArticleDate!=null&&!firstArticleDate.equals(TimeUtil.getDate())) {
+        if (firstArticleDate != null && !firstArticleDate.equals(TimeUtil.getDate())) {
 
             Bundle bundle1 = new Bundle();
             bundle1.putString(Constants.KEY_DATE, TimeUtil.getDate());
@@ -105,16 +87,6 @@ public class ArticleFragment extends Fragment implements ViewPager.OnPageChangeL
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    }
-
-    @Override
     public void onPageSelected(int position) {
         //当前某一个位置已经被选择了
 
@@ -130,8 +102,7 @@ public class ArticleFragment extends Fragment implements ViewPager.OnPageChangeL
         }
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        //state ==1的时辰默示正在滑动，state==2的时辰默示滑动完毕了，state==0的时辰默示什么都没做。
+    public Article getCurArticle() {
+        return ((ArticleContentFragment)adapter.getItem(pager.getCurrentItem())).getContentData();
     }
 }

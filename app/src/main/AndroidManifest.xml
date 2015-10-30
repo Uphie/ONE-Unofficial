@@ -34,14 +34,28 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider436696993183527"
+            android:exported="true" />
+
         <!--Umeng的AppKey,可以写在这里，但较不安全-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5629c63be0f55a886b00488f" />
-        <!--应用的推广渠道，如“Wandoujia”,"360"-->
+            android:value="@string/appkey_umeng" />
+        <!--自己标记的应用的推广渠道-->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Wandoujia" />
+            android:value="Uphie" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/appid_facebook" />
 
     </application>
 
