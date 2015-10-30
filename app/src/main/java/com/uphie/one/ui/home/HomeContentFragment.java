@@ -77,7 +77,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         RequestParams params = new RequestParams();
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_HOME, params,new HttpData("result", "hpEntity"));
+        getHttpData(Api.URL_HOME, params, new HttpData("result", "hpEntity"));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                 if (home == null) {
                     return;
                 }
-                curSaying=home;
+                curSaying = home;
 
                 homeContent.setVisibility(View.VISIBLE);
 
@@ -124,7 +124,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                         if (imageInfo == null) {
                             return;
                         }
-                        float rate = (float)imageInfo.getWidth() / (float)imageInfo.getHeight();
+                        float rate = (float) imageInfo.getWidth() / (float) imageInfo.getHeight();
                         dvIllustrator.setAspectRatio(rate);
                     }
                 };
@@ -136,11 +136,11 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
-                    JSONObject jsonObject=new JSONObject(data);
-                    int likeCount=jsonObject.optInt("strPraisednumber");
+                    JSONObject jsonObject = new JSONObject(data);
+                    int likeCount = jsonObject.optInt("strPraisednumber");
                     //若实际的喜欢数量与LikeView自增的结果值不同，显示实际的数量
-                    if (likeCount!=lvSaying.getLikeCount()){
-                        lvSaying.setText(likeCount+"");
+                    if (likeCount != lvSaying.getLikeCount()) {
+                        lvSaying.setText(likeCount + "");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -154,7 +154,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         switch (url) {
             case Api.URL_HOME:
                 //没有数据，删除并销毁自己
-                ArticleFragment.adapter.removeLast();
+                HomeFragment.adapter.removeLast();
                 onDestroy();
                 break;
         }
@@ -165,10 +165,10 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
     public void onLikeChanged() {
         RequestParams requestParams = new RequestParams();
         requestParams.put("strPraiseItemId", curSaying.strHpId);
-        requestParams.put("strDeviceId","" );
+        requestParams.put("strDeviceId", "");
         requestParams.put("strAppName", "ONE");
         requestParams.put("strPraiseItem", "HP");
-        getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
+        getHttpData(Api.URL_LIKE_OR_CANCLELIKE, requestParams, new HttpData("result", "entPraise"));
     }
 
 }

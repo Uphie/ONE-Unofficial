@@ -17,6 +17,8 @@ import com.uphie.one.common.HttpData;
 import com.uphie.one.common.HttpError;
 import com.uphie.one.interfaces.IHttp;
 import com.uphie.one.interfaces.IInit;
+import com.uphie.one.utils.NetworkUtil;
+import com.uphie.one.utils.TextToast;
 
 import org.apache.http.Header;
 import org.json.JSONException;
