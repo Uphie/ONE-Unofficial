@@ -21,9 +21,9 @@ public class FragmentAdapter<T extends Fragment> extends android.support.v4.app.
     }
 
     @Override
-    public T getItem(int position) {
+    public T  getItem(int position) {
         if (fragmentList.size() > 0 && fragmentList.size() > position) {
-            return (T)(fragmentList.get(position));
+            return fragmentList.get(position);
         }
         return null;
     }

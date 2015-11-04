@@ -1,5 +1,6 @@
 package com.uphie.one.abs;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -131,6 +133,7 @@ public abstract class AbsModuleFragment extends Fragment implements IInit, ViewP
                     }
                 }
                 break;
+            case ShareChannel.GOOGLE_PLUS:
             case ShareChannel.TWITTER:
             case ShareChannel.WECHAT:
             case ShareChannel.WEIBO:

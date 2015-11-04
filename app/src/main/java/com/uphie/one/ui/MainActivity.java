@@ -151,6 +151,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 sharePanel.dismiss();
                 break;
+            case R.id.share_google_plus:
+                switch (tabGroup.getCheckedRadioButtonId()) {
+                    case R.id.tab_home:
+                        homeFragment.share(ShareChannel.GOOGLE_PLUS, homeFragment.getCurSaying());
+                        break;
+                    case R.id.tab_article:
+                        articleFragment.share(ShareChannel.GOOGLE_PLUS, articleFragment.getCurArticle());
+                        break;
+                    case R.id.tab_question:
+                        questionFragment.share(ShareChannel.GOOGLE_PLUS, questionFragment.getCurQuestion());
+                        break;
+                    case R.id.tab_thing:
+                        thingFragment.share(ShareChannel.GOOGLE_PLUS, thingFragment.getCurThing());
+                        break;
+                }
+                sharePanel.dismiss();
+                break;
             case R.id.share_wechat:
                 switch (tabGroup.getCheckedRadioButtonId()) {
                     case R.id.tab_home:
