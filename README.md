@@ -26,3 +26,4 @@ Contact
 ------------
 * Email: uphie7@gmail.com
 * Weibo: http://weibo.com/u/5737193521
+* Twitter: https://twitter.com/UphieElis
