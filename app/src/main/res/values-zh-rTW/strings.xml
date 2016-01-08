@@ -16,7 +16,7 @@
     <string name="share_qq">QQ</string>
     <string name="share_qzone">QQ空間</string>
 
-    <string name="not_support_share">暫不支持該平台分享，因為缺少該平台下的開發者賬戶。</string>
+    <string name="not_support_share">暫不支援該平台分享，因為缺少該平台下的開發者賬戶。</string>
     <string name="share_fail">分享失敗</string>
 
     <string name="item_about">關於</string>

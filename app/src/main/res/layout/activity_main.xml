@@ -42,28 +42,28 @@
         android:checkedButton="@+id/tab_home"
         android:orientation="horizontal">
 
-        <com.uphie.one.widgets.Tab
+        <studio.uphie.one.widgets.Tab
             android:id="@+id/tab_home"
             style="@style/TabStyle"
             android:checked="true"
             android:text="@string/tab_home" />
 
-        <com.uphie.one.widgets.Tab
+        <studio.uphie.one.widgets.Tab
             android:id="@+id/tab_article"
             style="@style/TabStyle"
             android:text="@string/tab_article" />
 
-        <com.uphie.one.widgets.Tab
+        <studio.uphie.one.widgets.Tab
             android:id="@+id/tab_question"
             style="@style/TabStyle"
             android:text="@string/tab_question" />
 
-        <com.uphie.one.widgets.Tab
+        <studio.uphie.one.widgets.Tab
             android:id="@+id/tab_thing"
             style="@style/TabStyle"
             android:text="@string/tab_thing" />
 
-        <com.uphie.one.widgets.Tab
+        <studio.uphie.one.widgets.Tab
             android:id="@+id/tab_personal"
             style="@style/TabStyle"
             android:text="@string/tab_personal" />

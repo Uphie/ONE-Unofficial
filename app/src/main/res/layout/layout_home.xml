@@ -81,7 +81,7 @@
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
-        <com.uphie.one.widgets.LikeView
+        <studio.uphie.one.widgets.LikeView
             android:id="@+id/liv_saying"
             style="@style/LikeViewStyle" />
     </LinearLayout>

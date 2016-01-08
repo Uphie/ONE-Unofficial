@@ -60,7 +60,7 @@
             android:textColor="#525355"
             android:textSize="15sp" />
 
-        <com.uphie.one.widgets.LikeView
+        <studio.uphie.one.widgets.LikeView
             android:id="@+id/liv_article"
             style="@style/LikeViewStyle" />
 

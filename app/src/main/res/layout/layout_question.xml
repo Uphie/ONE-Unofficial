@@ -71,7 +71,7 @@
             android:layout_marginTop="15dp"
             android:text="（责任编辑：夏知花落）" />
 
-        <com.uphie.one.widgets.LikeView
+        <studio.uphie.one.widgets.LikeView
             android:id="@+id/liv_question"
             style="@style/LikeViewStyle" />
 

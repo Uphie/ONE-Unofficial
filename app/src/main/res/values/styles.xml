@@ -13,8 +13,8 @@
         <item name="android:textSize">15sp</item>
         <item name="android:background">@drawable/tab</item>
         <item name="android:paddingTop">15dp</item>
-        <item name="com.uphie.one:checkedTextColor">@color/tab_text_checked</item>
-        <item name="com.uphie.one:uncheckedTextColor">@color/tab_text_unchecked</item>
+        <item name="studio.uphie.one:checkedTextColor">@color/tab_text_checked</item>
+        <item name="studio.uphie.one:uncheckedTextColor">@color/tab_text_unchecked</item>
     </style>
 
     <style name="LikeViewStyle">

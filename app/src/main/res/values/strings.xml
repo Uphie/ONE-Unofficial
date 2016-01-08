@@ -26,6 +26,9 @@
     <string name="item_comment">评分</string>
     <string name="item_feedback">意见反馈</string>
 
+
+    <string name="tip_feedback">请输入意见或建议</string>
+
     <string name="appid_facebook">436696993183527</string>
     <string name="appkey_umeng">5629c63be0f55a886b00488f</string>
 
