@@ -17,6 +17,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.loopj.android.http.RequestParams;
+
+import io.paperdb.Paper;
 import studio.uphie.one.R;
 import studio.uphie.one.abs.AbsBaseFragment;
 import studio.uphie.one.common.Api;
@@ -73,7 +75,9 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
 
         Bundle bundle = getArguments();
         String date = bundle.getString(Constants.KEY_DATE);
-        int index = bundle.getInt(Constants.KEY_INDEX);
+        index = bundle.getInt(Constants.KEY_INDEX);
+
+        curDate = TimeUtil.getPreviousDate(date, index);
 
         RequestParams params = new RequestParams();
         params.put("strDate", date);
@@ -86,54 +90,10 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         switch (url) {
             case Api.URL_HOME:
                 Home home = JsonUtil.getEntity(data, Home.class);
-                if (home == null) {
-                    return;
+                refreshUI(home);
+                if (home != null) {
+                    Paper.book().write(Constants.TAG_HOME + curDate, home);
                 }
-                curSaying = home;
-
-                homeContent.setVisibility(View.VISIBLE);
-
-                //标题，如 VOL.1997
-                sayingTitle.setText(home.strHpTitle);
-                //照片名称及作者简介
-                textIllustrationAuthor.setText(home.strAuthor.replace("&", "\n"));
-                //日
-                textDay.setText(TimeUtil.getDay(home.strMarketTime));
-                //月、年
-                textMonth.setText(TimeUtil.getMonthAndYear(home.strMarketTime));
-                //内容
-                textSaying.setText(home.strContent);
-                //喜欢的数量
-                lvSaying.setText(home.strPn);
-                //插画
-
-                ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
-                    @Override
-                    public void onFailure(String id, Throwable throwable) {
-                        super.onFailure(id, throwable);
-                        TextToast.shortShow("加载失败:" + throwable.toString());
-                    }
-
-                    @Override
-                    public void onIntermediateImageSet(String id, ImageInfo imageInfo) {
-                        super.onIntermediateImageSet(id, imageInfo);
-                    }
-
-                    @Override
-                    public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-                        super.onFinalImageSet(id, imageInfo, animatable);
-                        if (imageInfo == null) {
-                            return;
-                        }
-                        float rate = (float) imageInfo.getWidth() / (float) imageInfo.getHeight();
-                        dvIllustrator.setAspectRatio(rate);
-                    }
-                };
-                DraweeController controller = Fresco.newDraweeControllerBuilder()
-                        .setUri(Uri.parse(home.strThumbnailUrl))
-                        .setControllerListener(controllerListener)
-                        .build();
-                dvIllustrator.setController(controller);
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
@@ -155,11 +115,17 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         switch (url) {
             case Api.URL_HOME:
                 //没有数据，删除并销毁自己
-                HomeFragment.adapter.removeLast();
-                onDestroy();
+                finish();
                 break;
         }
+    }
 
+    @Override
+    public void onRestoreData(String url) {
+        if (url.equals(Api.URL_HOME)) {
+            Home home = Paper.book().read(Constants.TAG_HOME + curDate, null);
+            refreshUI(home);
+        }
     }
 
     @Override
@@ -174,5 +140,71 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
 
     public Home getContentData() {
         return curSaying;
+    }
+
+    @Override
+    public void refreshUI(Object data) {
+        Home home = (Home) data;
+        if (home == null) {
+            if (!isFirstPage()) {
+                //如果不是第一个，销毁之
+                finish();
+            }
+            return;
+        }
+        if (isExpired()) {
+            finish();
+        }
+        curSaying = home;
+
+        homeContent.setVisibility(View.VISIBLE);
+
+        //标题，如 VOL.1997
+        sayingTitle.setText(home.strHpTitle);
+        //照片名称及作者简介
+        textIllustrationAuthor.setText(home.strAuthor.replace("&", "\n"));
+        //日
+        textDay.setText(TimeUtil.getDay(home.strMarketTime));
+        //月、年
+        textMonth.setText(TimeUtil.getMonthAndYear(home.strMarketTime));
+        //内容
+        textSaying.setText(home.strContent);
+        //喜欢的数量
+        lvSaying.setText(home.strPn);
+        //插画
+
+        ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFailure(String id, Throwable throwable) {
+                super.onFailure(id, throwable);
+                TextToast.shortShow("加载失败:" + throwable.toString());
+            }
+
+            @Override
+            public void onIntermediateImageSet(String id, ImageInfo imageInfo) {
+                super.onIntermediateImageSet(id, imageInfo);
+            }
+
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                super.onFinalImageSet(id, imageInfo, animatable);
+                if (imageInfo == null) {
+                    return;
+                }
+                float rate = (float) imageInfo.getWidth() / (float) imageInfo.getHeight();
+                dvIllustrator.setAspectRatio(rate);
+            }
+        };
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(Uri.parse(home.strThumbnailUrl))
+                .setControllerListener(controllerListener)
+                .build();
+        dvIllustrator.setController(controller);
+    }
+
+    @Override
+    public void finish() {
+        HomeFragment.adapter.removeLast();
+        onDestroy();
     }
 }

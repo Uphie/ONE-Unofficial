@@ -1,6 +1,5 @@
 package studio.uphie.one.abs;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -17,6 +15,9 @@ import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import studio.uphie.one.R;
 import studio.uphie.one.interfaces.IInit;
 import studio.uphie.one.interfaces.IShare;
@@ -26,9 +27,6 @@ import studio.uphie.one.ui.home.Home;
 import studio.uphie.one.ui.question.Question;
 import studio.uphie.one.ui.thing.Thing;
 import studio.uphie.one.utils.TextToast;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Uphie on 2015/10/30.

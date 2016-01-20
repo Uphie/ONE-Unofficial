@@ -58,43 +58,13 @@ public abstract class AbsBaseActivity extends Activity implements IInit, IHttp, 
     }
 
     @Override
-    public void getHttpData(final String url, RequestParams params, final HttpData httpData) {
+    public void onDataError(String url, HttpError error) {}
 
-        HttpClient.postByForm(url, params, new TextHttpResponseHandler() {
+    @Override
+    public void getHttpData(String url, RequestParams param, HttpData httpData) {}
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                if (statusCode == 200) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(responseString);
-
-                        if (httpData == null) {
-                            return;
-                        }
-                        String success = jsonObject.optString(httpData.result);
-                        if (success.equals("SUCCESS")) {
-                            String data = jsonObject.optString(httpData.data, "");
-                            onDataOk(url, data);
-                        } else {
-                            HttpError error = new HttpError(statusCode, "", responseString);
-                            onDataError(url, error);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    HttpError error = new HttpError(statusCode, "", responseString);
-                    onDataError(url, error);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                HttpError error = new HttpError(statusCode, throwable.toString(), responseString);
-                onDataError(url, error);
-            }
-        });
-    }
+    @Override
+    public void onDataOk(String url, String data) {}
 
     @Override
     public void onNetworkDisconnected() {
@@ -152,6 +122,11 @@ public abstract class AbsBaseActivity extends Activity implements IInit, IHttp, 
         super.onDestroy();
         //注销监听器
         unregisterReceiver(mNetworkStateChangeReceiver);
+    }
+
+    @Override
+    public void onRestoreData(String url) {
+
     }
 
     /**

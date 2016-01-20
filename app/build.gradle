@@ -8,8 +8,8 @@ android {
         applicationId "studio.uphie.one"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "2016-1-8"
+        versionCode 2
+        versionName "2016-1-20"
     }
     buildTypes {
         release {
@@ -25,8 +25,8 @@ dependencies {
     //    compile 'com.android.support:support-v4:22+'
     compile 'com.loopj.android:android-async-http:1.4.5'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.facebook.fresco:fresco:0.7.0+'
+    compile 'io.paperdb:paperdb:1.1'
     //友盟统计
     compile 'com.umeng.analytics:analytics:latest.integration'
     //facebook

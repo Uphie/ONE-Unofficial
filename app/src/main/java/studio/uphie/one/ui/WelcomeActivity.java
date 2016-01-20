@@ -53,17 +53,6 @@ public class WelcomeActivity extends AbsBaseActivity {
 
         handler.sendEmptyMessageDelayed(0, 1000);
     }
-
-    @Override
-    public void onDataOk(String url, String data) {
-
-    }
-
-    @Override
-    public void onDataError(String url, HttpError error) {
-
-    }
-
     private Handler handler= new Handler() {
         @Override
         public void handleMessage(Message msg) {

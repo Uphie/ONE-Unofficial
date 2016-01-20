@@ -11,6 +11,8 @@ import java.util.Date;
  */
 public class TimeUtil {
 
+    public static final long DAY_VALUE = 1000 * 60 * 60 * 24;
+
     /**
      * 日期格式
      */
@@ -117,7 +119,7 @@ public class TimeUtil {
             Date d = format_date.parse(date);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(d);
-            calendar.roll(Calendar.DAY_OF_MONTH, offset);
+            calendar.roll(Calendar.DAY_OF_MONTH, -offset + 1);
             return format_date.format(calendar.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -134,11 +136,11 @@ public class TimeUtil {
     public static String getDay(String date) {
         try {
             Date d = format_date.parse(date);
-            Calendar calendar=Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             calendar.setTime(d);
-            int day=calendar.get(Calendar.DAY_OF_MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            return day<10?"0"+day:""+day;
+            return day < 10 ? "0" + day : "" + day;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -193,11 +195,35 @@ public class TimeUtil {
                     builder.append("Dec,");
                     break;
             }
-            builder.append(d.getYear()+1900);
+            builder.append(d.getYear() + 1900);
             return builder.toString();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * 获取目标时间距离当前时间的天数的差值
+     *
+     * @param time 目标时间
+     * @return 天数差值
+     */
+    public static long getDateDifference(String time) {
+        try {
+            Date date = format_date.parse(time);
+
+            Calendar now = Calendar.getInstance();
+            now.clear(Calendar.HOUR);
+            now.clear(Calendar.MINUTE);
+            now.clear(Calendar.SECOND);
+            now.clear(Calendar.MILLISECOND);
+
+            long dif = now.getTimeInMillis() - date.getTime();
+            return dif /DAY_VALUE;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

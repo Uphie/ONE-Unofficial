@@ -42,7 +42,7 @@ public class HomeFragment extends AbsModuleFragment {
         HomeContentFragment fragment2 = new HomeContentFragment();
         fragment2.setArguments(bundle2);
 
-        List<Fragment> list = new ArrayList<>();
+        List<Fragment> list = new ArrayList();
         list.add(fragment1);
         list.add(fragment2);
         adapter = new FragmentAdapter(getChildFragmentManager(), list);
@@ -70,7 +70,7 @@ public class HomeFragment extends AbsModuleFragment {
             HomeContentFragment fragment2 = new HomeContentFragment();
             fragment2.setArguments(bundle2);
 
-            List<Fragment> list = new ArrayList<>();
+            List<Fragment> list = new ArrayList();
             list.add(fragment1);
             list.add(fragment2);
             adapter = new FragmentAdapter(getChildFragmentManager(), list);

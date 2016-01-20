@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 
 import com.facebook.FacebookSdk;
 
+import io.paperdb.Paper;
 import studio.uphie.one.utils.ImageUtil;
 import studio.uphie.one.utils.NetworkUtil;
 import studio.uphie.one.utils.TextToast;
@@ -21,6 +22,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Paper.init(this);
         ImageUtil.init(this);
         NetworkUtil.init(this);
         TextToast.init(this);

@@ -10,12 +10,13 @@ import java.io.File;
  */
 public class FileManager {
 
-    public static final String DIR_PIC_CACHE="img";
+    public static final String DIR_IMG_CACHE = "img";
     private static String appDir;
 
     /**
-     * 获得图片缓存路径
-     * @return
+     * 获得应用主目录
+     *
+     * @return 主目录路径
      */
     public static String getAppDir() {
         if (appDir == null) {
@@ -28,9 +29,8 @@ public class FileManager {
             }
         } else {
             File file = new File(appDir);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            //当appDir存在时，返回false；创建成功时，返回true
+            file.mkdirs();
         }
         return appDir;
     }

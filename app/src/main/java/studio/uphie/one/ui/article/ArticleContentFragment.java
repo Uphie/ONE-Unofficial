@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
+
+import io.paperdb.Paper;
 import studio.uphie.one.R;
 import studio.uphie.one.abs.AbsBaseFragment;
 import studio.uphie.one.common.Api;
@@ -66,7 +68,9 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
 
         Bundle bundle = getArguments();
         String date = bundle.getString(Constants.KEY_DATE);
-        int index = bundle.getInt(Constants.KEY_INDEX);
+        index = bundle.getInt(Constants.KEY_INDEX);
+
+        curDate = TimeUtil.getPreviousDate(date, index);
 
         RequestParams params = new RequestParams();
         params.put("strMS", 1);
@@ -80,38 +84,20 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
         switch (url) {
             case Api.URL_ARTICLE:
                 Article article = JsonUtil.getEntity(data, Article.class);
-                if (article == null) {
-                    return;
+                //刷新显示界面
+                refreshUI(article);
+                //写入缓存
+                if (article != null) {
+                    Paper.book().write(Constants.TAG_ARTICLE + curDate, article);
                 }
-                curArticle=article;
-
-                articleContent.setVisibility(View.VISIBLE);
-                //上架日期
-                textArticleDate.setText(TimeUtil.getEngDate(article.strContMarketTime));
-                //标题
-                text_ArticleTitle.setText(article.strContTitle);
-                //作者
-                text_ArticleAuthor.setText(article.strContAuthor);
-                //文章内容，内容中有HTML标记，用于正常显示段落，需要解析
-                text_ArticleContent.setText(Html.fromHtml(article.strContent));
-                //责任编辑
-                text_ArticleEditor.setText(article.strContAuthorIntroduce);
-                //喜欢的数量
-                lvArticle.setText(article.strPraiseNumber);
-                //作者
-                text_ArticleAuthorAddition.setText(article.strContAuthor);
-                //微博名
-                text_ArticleAuthorWeibo.setText(article.sWbN);
-                //作者简介
-                text_ArticleAuthorIntro.setText(article.sAuth);
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
-                    JSONObject jsonObject=new JSONObject(data);
-                    int likeCount=jsonObject.optInt("strPraisednumber");
+                    JSONObject jsonObject = new JSONObject(data);
+                    int likeCount = jsonObject.optInt("strPraisednumber");
                     //若实际的喜欢数量与LikeView自增的结果值不同，显示实际的数量
-                    if (likeCount!=lvArticle.getLikeCount()){
-                        lvArticle.setText(likeCount+"");
+                    if (likeCount != lvArticle.getLikeCount()) {
+                        lvArticle.setText(likeCount + "");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -125,11 +111,17 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
         switch (url) {
             case Api.URL_ARTICLE:
                 //没有数据，删除并销毁自己
-                ArticleFragment.adapter.removeLast();
-                onDestroy();
+                finish();
                 break;
         }
+    }
 
+    @Override
+    public void onRestoreData(String url) {
+        if (url.equals(Api.URL_ARTICLE)) {
+            Article article = Paper.book().read(Constants.TAG_ARTICLE + curDate, null);
+            refreshUI(article);
+        }
     }
 
     @Override
@@ -139,11 +131,52 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
         requestParams.put("strDeviceId", "");
         requestParams.put("strAppName", "ONE");
         requestParams.put("strPraiseItem", "CONTENT");
-        getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
+        getHttpData(Api.URL_LIKE_OR_CANCLELIKE, requestParams, new HttpData("result", "entPraise"));
     }
 
 
     public Article getContentData() {
         return curArticle;
+    }
+
+    @Override
+    public void refreshUI(Object data) {
+        Article article = (Article) data;
+        if (article == null) {
+            if (!isFirstPage()) {
+                //如果不是第一个，销毁之
+                finish();
+            }
+            return;
+        }
+        if (isExpired()) {
+            finish();
+        }
+        curArticle = article;
+        articleContent.setVisibility(View.VISIBLE);
+        //上架日期
+        textArticleDate.setText(TimeUtil.getEngDate(article.strContMarketTime));
+        //标题
+        text_ArticleTitle.setText(article.strContTitle);
+        //作者
+        text_ArticleAuthor.setText(article.strContAuthor);
+        //文章内容，内容中有HTML标记，用于正常显示段落，需要解析
+        text_ArticleContent.setText(Html.fromHtml(article.strContent));
+        //责任编辑
+        text_ArticleEditor.setText(article.strContAuthorIntroduce);
+        //喜欢的数量
+        lvArticle.setText(article.strPraiseNumber);
+        //作者
+        text_ArticleAuthorAddition.setText(article.strContAuthor);
+        //微博名
+        text_ArticleAuthorWeibo.setText(article.sWbN);
+        //作者简介
+        text_ArticleAuthorIntro.setText(article.sAuth);
+    }
+
+    @Override
+    public void finish() {
+        ArticleFragment.adapter.removeLast();
+        onDestroy();
     }
 }

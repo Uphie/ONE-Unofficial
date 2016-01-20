@@ -35,7 +35,7 @@ public class ArticleFragment extends AbsModuleFragment {
         bundle1.putInt(Constants.KEY_INDEX, 1);
         ArticleContentFragment fragment1 = new ArticleContentFragment();
         fragment1.setArguments(bundle1);
-
+        //昨天的文章
         Bundle bundle2 = new Bundle();
         bundle2.putString(Constants.KEY_DATE, TimeUtil.getDate());
         bundle2.putInt(Constants.KEY_INDEX, 2);

@@ -19,14 +19,4 @@ public class FeedbackActivity extends AbsBaseActivity {
 
     }
 
-    @Override
-    public void onDataOk(String url, String data) {
-
-    }
-
-    @Override
-    public void onDataError(String url, HttpError error) {
-
-    }
-
 }

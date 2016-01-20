@@ -15,4 +15,6 @@ public interface IHttp {
     void onDataOk(String url, String data);
 
     void onDataError(String url, HttpError error);
+
+    void onRestoreData(String url);
 }

@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
 import studio.uphie.one.R;
 import studio.uphie.one.common.HttpClient;
 import studio.uphie.one.common.HttpData;
@@ -25,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.ButterKnife;
+import studio.uphie.one.utils.TimeUtil;
 
 /**
  * Created by Uphie on 2015/9/5.
@@ -32,8 +34,14 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
 
-    private PopupWindow loadingWindow;
-    private View rootView;
+    /**
+     * 当前的日期
+     */
+    protected String curDate;
+    /**
+     * 当前的索引
+     */
+    protected int index;
 
     @Nullable
     @Override
@@ -41,7 +49,7 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
         if (getLayoutId() == 0) {
             return super.onCreateView(inflater, container, savedInstanceState);
         }
-        rootView = inflater.inflate(getLayoutId(), null);
+        View rootView = inflater.inflate(getLayoutId(), null);
         ButterKnife.bind(this, rootView);
         init();
         return rootView;
@@ -55,6 +63,12 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
 
     @Override
     public void getHttpData(final String url, RequestParams params, final HttpData httpData) {
+
+        if (!NetworkUtil.getInstance().checkNetworkAvailable()) {
+            //网络不可用,使用本地缓存
+            onRestoreData(url);
+            return;
+        }
 
         HttpClient.postByForm(url, params, new TextHttpResponseHandler() {
 
@@ -99,30 +113,24 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
     }
 
     /**
-     * 显示和关闭加载界面
-     *
-     * @param show
+     * 当前是否是第一页
+     * @return
      */
-    public void toggleLoadingView(boolean show) {
-        if (show) {
-            //显示加载
-            if (loadingWindow == null) {
-                View view = View.inflate(getActivity(), R.layout.loading_window, null);
-
-                loadingWindow = new PopupWindow(getActivity());
-                loadingWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                loadingWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-                loadingWindow.setContentView(view);
-            }
-            if (!loadingWindow.isShowing()) {
-                loadingWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
-            }
-        } else {
-            if (loadingWindow != null && loadingWindow.isShowing()) {
-                loadingWindow.dismiss();
-            }
-        }
+    public boolean isFirstPage(){
+        return index==1;
+    }
+    /**
+     * 是否过期，限制查看7天内的往期内容
+     *
+     * @return
+     */
+    public boolean isExpired() {
+        return TimeUtil.getDateDifference(curDate) > 7;
     }
 
-    public abstract  <T> T getContentData();
+    public abstract <T> T getContentData();
+
+    public abstract void refreshUI(Object data);
+
+    public abstract void finish();
 }

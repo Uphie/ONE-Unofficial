@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
+
+import io.paperdb.Paper;
 import studio.uphie.one.R;
 import studio.uphie.one.abs.AbsBaseFragment;
 import studio.uphie.one.common.Api;
@@ -16,12 +18,15 @@ import studio.uphie.one.common.Constants;
 import studio.uphie.one.common.HttpData;
 import studio.uphie.one.common.HttpError;
 import studio.uphie.one.ui.article.Article;
+import studio.uphie.one.ui.home.HomeFragment;
 import studio.uphie.one.utils.JsonUtil;
 import studio.uphie.one.utils.TimeUtil;
 import studio.uphie.one.widgets.LikeView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.Time;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,12 +71,14 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
 
         Bundle bundle = getArguments();
         String date = bundle.getString(Constants.KEY_DATE);
-        int index = bundle.getInt(Constants.KEY_INDEX);
+        index = bundle.getInt(Constants.KEY_INDEX);
+
+        curDate = TimeUtil.getPreviousDate(date, index);
 
         RequestParams params = new RequestParams();
         params.put("strDate", date);
         params.put("strRow", index);
-        getHttpData(Api.URL_QUESTION, params,new HttpData("result", "questionAdEntity"));
+        getHttpData(Api.URL_QUESTION, params, new HttpData("result", "questionAdEntity"));
     }
 
     @Override
@@ -79,28 +86,18 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
         switch (url) {
             case Api.URL_QUESTION:
                 Question question = JsonUtil.getEntity(data, Question.class);
-                if (question == null) {
-                    return;
+                refreshUI(question);
+                if (question != null) {
+                    Paper.book().write(Constants.TAG_QUESTION + curDate, question);
                 }
-                curQuestion=question;
-
-                questionContent.setVisibility(View.VISIBLE);
-
-                textQuestionDate.setText(TimeUtil.getEngDate(question.strQuestionMarketTime));
-                textQuestionTitle.setText(question.strQuestionTitle);
-                textQuestionContent.setText(Html.fromHtml(question.strQuestionContent));
-                textAnswerTitle.setText(question.strAnswerTitle);
-                textAnswerContent.setText(Html.fromHtml(question.strAnswerContent));
-                textAnswerEditor.setText(question.sEditor);
-                lvQuestion.setText(question.strPraiseNumber + "");
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
-                    JSONObject jsonObject=new JSONObject(data);
-                    int likeCount=jsonObject.optInt("strPraisednumber");
-                    //若实际的喜欢数量与LikeView自增的结果值不同，显示实际的数量
-                    if (likeCount!=lvQuestion.getLikeCount()){
-                        lvQuestion.setText(likeCount+"");
+                    JSONObject jsonObject = new JSONObject(data);
+                    int likeCount = jsonObject.optInt("strPraisednumber");
+                    //若实际的喜欢数量与LikeView自增的结果值不同，更新显示最新的数量
+                    if (likeCount != lvQuestion.getLikeCount()) {
+                        lvQuestion.setText(likeCount + "");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,25 +111,63 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
         switch (url) {
             case Api.URL_QUESTION:
                 //没有数据，删除并销毁自己
-                QuestionFragment.adapter.removeLast();
-                onDestroy();
+                finish();
                 break;
         }
+    }
 
+    @Override
+    public void onRestoreData(String url) {
+        if (url.equals(Api.URL_QUESTION)) {
+            Question question = Paper.book().read(Constants.TAG_QUESTION + curDate, null);
+            refreshUI(question);
+        }
     }
 
     @Override
     public void onLikeChanged() {
         RequestParams requestParams = new RequestParams();
         requestParams.put("strPraiseItemId", curQuestion.strQuestionId);
-        //我不清楚strDeviceId为什么标识符，格式为“ffffffff-9248-aa0c-ffff-ffffaea9cc69”
+        //不清楚strDeviceId为什么标识符，格式为“ffffffff-9248-aa0c-ffff-ffffaea9cc69”
         requestParams.put("strDeviceId", "");
         requestParams.put("strAppName", "ONE");
         requestParams.put("strPraiseItem", "QUESTION");
-        getHttpData(Api.URL_LIKE_OR_CANCLELIKE,requestParams,new HttpData("result","entPraise"));
+        getHttpData(Api.URL_LIKE_OR_CANCLELIKE, requestParams, new HttpData("result", "entPraise"));
     }
 
     public Question getContentData() {
         return curQuestion;
+    }
+
+    @Override
+    public void refreshUI(Object data) {
+        Question question = (Question) data;
+        if (question == null) {
+            if (!isFirstPage()) {
+                //如果不是第一个，销毁之
+                finish();
+            }
+            return;
+        }
+        if (isExpired()) {
+            finish();
+        }
+        curQuestion = question;
+
+        questionContent.setVisibility(View.VISIBLE);
+
+        textQuestionDate.setText(TimeUtil.getEngDate(question.strQuestionMarketTime));
+        textQuestionTitle.setText(question.strQuestionTitle);
+        textQuestionContent.setText(Html.fromHtml(question.strQuestionContent));
+        textAnswerTitle.setText(question.strAnswerTitle);
+        textAnswerContent.setText(Html.fromHtml(question.strAnswerContent));
+        textAnswerEditor.setText(question.sEditor);
+        lvQuestion.setText(question.strPraiseNumber + "");
+    }
+
+    @Override
+    public void finish() {
+        QuestionFragment.adapter.removeLast();
+        onDestroy();
     }
 }
