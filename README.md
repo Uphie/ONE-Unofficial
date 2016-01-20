@@ -11,7 +11,8 @@
 引用的库
 ----------
  * [butterknife](https://github.com/JakeWharton/butterknife)
- *  [android-async-http](https://github.com/loopj/android-async-http)
+ * [fastjson](https://github.com/alibaba/fastjson)
+ * [android-async-http](https://github.com/loopj/android-async-http)
  * [fresco](https://github.com/facebook/fresco)
  * [paper](https://github.com/pilgr/Paper)
 
@@ -33,7 +34,8 @@
 版本
 ----------
 *  2016-1-20，这两天修(zhe)改(teng)了下代码，增加了缓存机制，包括图片缓存和文件缓存，限制了最多只能查看往期7天的内容。
-首次尝试了使用[paper](https://github.com/pilgr/Paper)，但一个缺点是paper不能设置过期时间，只好自己判断了。下次会增加意见反馈新功能。
+首次尝试了使用[paper](https://github.com/pilgr/Paper)，一个优秀的数据存储库，但一个缺点是paper不能设置过期时间，只好自己判断了。下一个版本会增加意见反馈新功能。
+
 * 2016-1-8，由于工作的关系有一段时间没有维护了，现在拾了起来。从这版中开始使用日期作为版本名，更改了包名为studio.uphie.one。修复了程序长时间后台运行再打开界面重叠的bug，放弃了双击界面“喜欢”的功能。
 
 下载
