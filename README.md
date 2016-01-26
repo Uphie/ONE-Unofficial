@@ -11,17 +11,17 @@
 引用的库
 ----------
  * [butterknife](https://github.com/JakeWharton/butterknife)
-<<<<<<< HEAD
-=======
  * [fastjson](https://github.com/alibaba/fastjson)
->>>>>>> origin/master
  * [android-async-http](https://github.com/loopj/android-async-http)
  * [fresco](https://github.com/facebook/fresco)
  * [paper](https://github.com/pilgr/Paper)
+ * [android-PullToRefresh](https://github.com/chrisbanes/Android-PullToRefresh)
 
 第三方服务
 -----------
 * 友盟统计Sdk
+* 友盟用户反馈Sdk
+* 友盟自动更新Sdk
 * Facebook分享Sdk
   
 截图
@@ -36,6 +36,8 @@
 
 版本
 ----------
+*  2016-1-26，主要在个人中心增加了“关于”、“分享给好友”、“意见反馈”、“评分”和自动更新功能。下一个版本会增加左滑刷新功能。
+
 *  2016-1-20，这两天修(zhe)改(teng)了下代码，增加了缓存机制，包括图片缓存和文件缓存，限制了最多只能查看往期7天的内容。
 首次尝试了使用[paper](https://github.com/pilgr/Paper)，一个优秀的数据存储库，但一个缺点是paper不能设置过期时间，只好自己判断了。下一个版本会增加意见反馈新功能。
 
