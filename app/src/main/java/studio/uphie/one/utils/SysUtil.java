@@ -2,6 +2,7 @@ package studio.uphie.one.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 
@@ -21,6 +22,22 @@ public class SysUtil {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics;
+    }
+
+    /**
+     * 获得设备型号
+     * @return 手机设备型号
+     */
+    public static String getPhoneModel(){
+        return Build.MODEL;
+    }
+
+    /**
+     * 获得设备序列号，但在某些山寨或定制设备上会得到垃圾数据
+     * @return 手机设备序列号
+     */
+    public static String getPhoneSerial(){
+        return Build.SERIAL;
     }
 
     /**

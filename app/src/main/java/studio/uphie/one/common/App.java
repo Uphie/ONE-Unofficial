@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.DisplayMetrics;
 
 import com.facebook.FacebookSdk;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.fb.push.FeedbackPush;
 
 import io.paperdb.Paper;
 import studio.uphie.one.utils.ImageUtil;
@@ -26,5 +28,8 @@ public class App extends Application {
         ImageUtil.init(this);
         NetworkUtil.init(this);
         TextToast.init(this);
+
+        //友盟意见反馈初始化
+        FeedbackPush.getInstance(this).init(false);
     }
 }

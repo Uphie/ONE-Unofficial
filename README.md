@@ -11,7 +11,7 @@
 引用的库
 ----------
  * [butterknife](https://github.com/JakeWharton/butterknife)
- *  [android-async-http](https://github.com/loopj/android-async-http)
+ * [android-async-http](https://github.com/loopj/android-async-http)
  * [fresco](https://github.com/facebook/fresco)
  * [paper](https://github.com/pilgr/Paper)
 

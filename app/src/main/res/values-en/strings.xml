@@ -7,7 +7,8 @@
     <string name="tab_thing">Thing</string>
     <string name="tab_personal">Personal</string>
 
-    <string name="cancel">Cancle</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 
     <string name="share_facebook">Facebook</string>
     <string name="share_twitter">Twitter</string>
@@ -19,7 +20,16 @@
     <string name="not_support_share">Not support sharing on this platform because of lack of developer account.</string>
     <string name="share_fail">Share failed</string>
 
+    <string name="label_update">Here\'s a new ONE, download it ?</string>
+    <string name="label_update_content">Version:%1$s \nUpdate log:%2$s</string>
+
+    <string name="content_about">This is a unofficial version of 『ONE·一个』, which is created to be a more favorable ONE and for Android skills communication. All rights of supplied contents belong to the official ONE.\n\nContacts\nWeibo: http://weibo.com/u/5737193521\nTwitter: https://twiter.com/UphieElis\nEmail: uphie7@gmail.com</string>
+
+    <string name="tip_feedback">Input suggestions</string>
+    <string name="label_send">Send</string>
+
     <string name="item_about">About</string>
+    <string name="item_share_app">Share to you friends</string>
     <string name="item_comment">Comment</string>
     <string name="item_feedback">Feedback</string>
 </resources>

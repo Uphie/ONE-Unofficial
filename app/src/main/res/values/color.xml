@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue">#01AEF0</color>
-    <color name="light_gray">#e0e0e0</color>
+    <color name="blue_dark">#0188CC</color>
+
+    <color name="green">#01AE00</color>
+    <color name="green_dark">#018E00</color>
+
     <color name="gray">#999999</color>
+    <color name="light_gray">#e0e0e0</color>
+    <color name="text_gray">#999999</color>
+    <color name="text_dark_gray">#444444</color>
+    <color name="disable_gray">#dddddd</color>
+    <color name="content_gray">#F3F4F6</color>
+
     <color name="tab_text_checked">#01AEF0</color>
     <color name="tab_text_unchecked">#c0c0c0</color>
-    <color name="content_gray">#F3F4F6</color>
     <color name="transparent_white">#C0FFFFFF</color>
 </resources>

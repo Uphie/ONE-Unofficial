@@ -4,35 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/actionbar"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="30dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/ic_back" />
-
-        <TextView
-            android:id="@+id/actionbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/item_about"
-            android:textColor="#606060"
-            android:textSize="17sp" />
-    </RelativeLayout>
+    <include layout="@layout/actionbar" />
 
     <TextView
         android:id="@+id/text_about"
         style="@style/ParagraphStyle"
-        android:layout_marginTop="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:autoLink="all" />
 </LinearLayout>

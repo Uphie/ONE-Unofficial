@@ -10,6 +10,7 @@
     <string name="tab_personal">个人</string>
 
     <string name="cancel">取消</string>
+    <string name="ok">确定</string>
 
     <string name="share_facebook">脸书</string>
     <string name="share_twitter">推特</string>
@@ -22,12 +23,31 @@
     <string name="not_support_share">暂不支持该平台分享，因为缺少该平台下的开发者账户。</string>
     <string name="share_fail">分享失败</string>
 
+    <string name="label_update">有新版本ONE啦，是否下载更新？</string>
+    <string name="label_update_content">版本：%1$s \n更新日志：%2$s</string>
+
     <string name="item_about">关于</string>
+    <string name="item_share_app">分享给好友</string>
     <string name="item_comment">评分</string>
     <string name="item_feedback">意见反馈</string>
 
+    <string name="content_about">本App为『ONE·一个』的一个非官方版本，旨在做一个更喜欢的ONE以及Android技术交流，内容的版权为官方所有。\n\n联系方式\n微博：http://weibo.com/u/5737193521\n推特：https://twiter.com/UphieElis\n邮箱：uphie7@gmail.com</string>
 
     <string name="tip_feedback">请输入意见或建议</string>
+    <string name="label_send">发送</string>
+
+    <string-array name="nicknames">
+        <item>郭采洁</item>
+        <item>徐佳莹</item>
+        <item>桂纶镁</item>
+        <item>汤唯</item>
+        <item>陈妍希</item>
+        <item>魏如萱</item>
+        <item>程壁</item>
+        <item>卡奇社</item>
+        <item>末小皮</item>
+        <item>佳妮</item>
+    </string-array>
 
     <string name="appid_facebook">436696993183527</string>
     <string name="appkey_umeng">5629c63be0f55a886b00488f</string>

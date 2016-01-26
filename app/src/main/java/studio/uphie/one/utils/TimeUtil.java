@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Uphie on 2015/9/6.
@@ -12,9 +13,18 @@ import java.util.Date;
 public class TimeUtil {
 
     public static final long DAY_VALUE = 1000 * 60 * 60 * 24;
-
     /**
-     * 日期格式
+     * HH:mm，时间格式
+     */
+    private static SimpleDateFormat hourFormat = new SimpleDateFormat(
+            "HH:mm", Locale.getDefault());
+    /**
+     * yyyy年MM月dd日  HH:mm:ss，时间格式
+     */
+    private static SimpleDateFormat timeFormat = new SimpleDateFormat(
+            "yyyy年MM月dd日  HH:mm:ss", Locale.getDefault());
+    /**
+     * yyyy-MM-dd，时间格式
      */
     private static SimpleDateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
     /**
@@ -220,10 +230,24 @@ public class TimeUtil {
             now.clear(Calendar.MILLISECOND);
 
             long dif = now.getTimeInMillis() - date.getTime();
-            return dif /DAY_VALUE;
+            return dif / DAY_VALUE;
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    /**
+     * 转换成HH:mm的时间格式
+     *
+     * @param date
+     * @return
+     */
+    public static String toSimpleTime(Date date) {
+        return hourFormat.format(date);
+    }
+
+    public static String toCommonTime(Date date) {
+        return timeFormat.format(date);
     }
 }

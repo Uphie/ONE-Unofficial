@@ -2,14 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@drawable/divider_light_gray"
-    android:orientation="vertical"
-    android:showDividers="middle">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_about"
         style="@style/ItemStyle"
         android:text="@string/item_about" />
+
+    <TextView
+        android:id="@+id/item_share_app"
+        style="@style/ItemStyle"
+        android:text="@string/item_share_app" />
+
+    <TextView
+        android:id="@+id/item_feedback"
+        style="@style/ItemStyle"
+        android:text="@string/item_feedback" />
 
     <TextView
         android:id="@+id/item_comment"

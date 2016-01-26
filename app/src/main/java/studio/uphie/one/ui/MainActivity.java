@@ -1,11 +1,13 @@
 package studio.uphie.one.ui;
 
+import android.app.AlertDialog;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -19,7 +21,21 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
+import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.fb.model.UserInfo;
+import com.umeng.update.UmengDownloadListener;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import studio.uphie.one.R;
 import studio.uphie.one.common.App;
 import studio.uphie.one.interfaces.ShareChannel;
@@ -38,7 +54,7 @@ import butterknife.ButterKnife;
  * Created by Uphie on 2015/9/5.
  * Email: uphie7@gmail.com
  */
-public class MainActivity extends FragmentActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener{
+public class MainActivity extends FragmentActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     @Bind(R.id.tab_group)
     RadioGroup tabGroup;
@@ -69,12 +85,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         fragmentManager = getSupportFragmentManager();
 
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             homeFragment = new HomeFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.main_content, homeFragment);
             transaction.commit();
         }
+
+        setUmeng();
     }
 
     @Override
@@ -347,5 +365,112 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         }
 
+    }
+
+    private void setUmeng() {
+        //对友盟统计日志加密
+        AnalyticsConfig.enableEncrypt(true);
+        //友盟统计不采集mac信息
+        MobclickAgent.setCheckDevice(false);
+
+        //禁止自动提示更新对话框
+        UmengUpdateAgent.setUpdateAutoPopup(false);
+        //禁止增量更新
+        UmengUpdateAgent.setDeltaUpdate(false);
+        UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+            @Override
+            public void onUpdateReturned(int status, UpdateResponse updateResponse) {
+                switch (status) {
+                    case UpdateStatus.Yes:
+                        //有更新
+                        showUpdateDialog(updateResponse);
+                        break;
+                    case UpdateStatus.No:
+                        //无更新
+                        break;
+                    case UpdateStatus.NoneWifi:
+                        //无wifi
+                        break;
+                    case UpdateStatus.Timeout:
+                        //超时
+                        break;
+                }
+            }
+        });
+        //友盟设置检查更新，不限于wifi
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        //禁用集成检测，否则会提示缺少xxx，然而我并不需要那些东西
+        UmengUpdateAgent.setUpdateCheckConfig(false);
+        //检查更新
+        UmengUpdateAgent.update(this);
+
+        //同步数据
+        final FeedbackAgent agent = new FeedbackAgent(this);
+        agent.sync();
+        UserInfo userInfo = agent.getUserInfo();
+        if (userInfo == null) {
+            UserInfo u = new UserInfo();
+            Map<String, String> contact = new HashMap<>();
+            contact.put("昵称", generateNickname());
+            contact.put("手机型号", SysUtil.getPhoneModel());
+            u.setContact(contact);
+            agent.setUserInfo(u);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    agent.updateUserInfo();
+                }
+            }).start();
+        }
+    }
+
+    /**
+     * 生成昵称
+     *
+     * @return 昵称
+     */
+    private String generateNickname() {
+        String[] temp = getResources().getStringArray(R.array.nicknames);
+        Random random = new Random();
+        int index = random.nextInt(temp.length);
+        return temp[index] + "-" + random.nextInt(1000);
+    }
+
+    private void showUpdateDialog(final UpdateResponse updateResponse) {
+        View view = View.inflate(this, R.layout.dialog_update, null);
+        TextView content= (TextView) view.findViewById(R.id.dialog_update_content);
+        TextView cancel= (TextView) view.findViewById(R.id.dialog_update_cancel);
+        TextView ok= (TextView) view.findViewById(R.id.dialog_update_ok);
+
+        content.setText(String.format(getResources().getString(R.string.label_update_content),updateResponse.version,updateResponse.updateLog));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+        builder.setView(view);
+        builder.setCancelable(false);
+        final AlertDialog dialog = builder.create();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                //开始下载
+                File file=UmengUpdateAgent.downloadedFile(MainActivity.this,updateResponse);
+                if (file==null) {
+                    //若未下载，下载
+                    UmengUpdateAgent.startDownload(MainActivity.this, updateResponse);
+                } else {
+                    // 已经下载，直接安装
+                    UmengUpdateAgent.startInstall(MainActivity.this, file);
+                }
+            }
+        });
+
+        dialog.show();
     }
 }

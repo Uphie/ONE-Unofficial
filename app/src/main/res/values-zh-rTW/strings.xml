@@ -8,6 +8,7 @@
     <string name="tab_personal">個人</string>
 
     <string name="cancel">取消</string>
+    <string name="ok">確定</string>
 
     <string name="share_facebook">臉書</string>
     <string name="share_twitter">推特</string>
@@ -19,7 +20,14 @@
     <string name="not_support_share">暫不支援該平台分享，因為缺少該平台下的開發者賬戶。</string>
     <string name="share_fail">分享失敗</string>
 
+    <string name="content_about">本App為『ONE·一个』的一个非官方版本，旨在做一個更喜歡的ONE以及Android技術交流，內容的版權歸官方所有。\n\n聯繫方式\n微博：http://weibo.com/u/5737193521\n推特：https://twiter.com/UphieElis\n郵箱：uphie7@gmail.com</string>
+
+    <string name="tip_feedback">請輸入您的意見或建議</string>
+    <string name="label_send">發送</string>
+
     <string name="item_about">關於</string>
+    <string name="item_share_app">分享给好友</string>
     <string name="item_comment">評分</string>
     <string name="item_feedback">意見回饋</string>
+
 </resources>

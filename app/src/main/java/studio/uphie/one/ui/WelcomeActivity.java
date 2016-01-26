@@ -11,12 +11,23 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.fb.model.UserInfo;
+import com.umeng.update.UmengUpdateAgent;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import studio.uphie.one.R;
 import studio.uphie.one.abs.AbsBaseActivity;
 import studio.uphie.one.common.HttpError;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import studio.uphie.one.utils.SysUtil;
 
 /**
  * Created by Uphie on 2015/10/23.
@@ -69,5 +80,6 @@ public class WelcomeActivity extends AbsBaseActivity {
             }
         }
     };
+
 
 }

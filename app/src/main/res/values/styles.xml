@@ -41,8 +41,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">10dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:drawableRight">@drawable/ic_to</item>
+        <item name="android:background">@drawable/bg_bottom_line_gray_slim</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
