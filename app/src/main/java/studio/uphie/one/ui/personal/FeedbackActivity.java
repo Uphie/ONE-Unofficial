@@ -1,5 +1,6 @@
 package studio.uphie.one.ui.personal;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -94,6 +95,10 @@ public class FeedbackActivity extends AbsBaseActivity {
                 return false;
             }
         });
+        //去除按item时的效果
+        listView.getRefreshableView().setSelector(new BitmapDrawable());
+        //顶部下拉刷新
+        listView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -103,6 +108,11 @@ public class FeedbackActivity extends AbsBaseActivity {
 
         adapter = new MessageAdapter(conversation);
         listView.setAdapter(adapter);
+
+        if (adapter.getCount() != 0) {
+            //滚动到底部，即显示到最新一条消息
+            listView.getRefreshableView().setSelection(adapter.getCount() - 1);
+        }
     }
 
     @OnClick(R.id.text_send)
