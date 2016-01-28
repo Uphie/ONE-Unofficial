@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Github/ONE-Unofficial/PullToRefresh/build/intermediates/bundles/debug/res/values-nl/values-nl.xml -->
+    <eat-comment/>
+    <string name="pull_to_refresh_pull_label">Sleep om te vernieuwen…</string>
+    <string name="pull_to_refresh_refreshing_label">Laden…</string>
+    <string name="pull_to_refresh_release_label">Loslaten om te vernieuwen…</string>
+</resources>
