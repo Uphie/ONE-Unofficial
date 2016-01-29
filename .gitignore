@@ -4,6 +4,7 @@
 /.idea/libraries
 .DS_Store
 /build
+/PullToRefresh/build
 /captures
 .idea/.name
 .idea/copyright/profiles_settings.xml
