@@ -25,6 +25,7 @@ import studio.uphie.one.common.Constants;
 import studio.uphie.one.common.HttpData;
 import studio.uphie.one.common.HttpError;
 import studio.uphie.one.ui.article.Article;
+import studio.uphie.one.ui.article.ArticleFragment;
 import studio.uphie.one.ui.home.HomeFragment;
 import studio.uphie.one.utils.JsonUtil;
 import studio.uphie.one.utils.TextToast;
@@ -84,6 +85,7 @@ public class ThingContentFragment extends AbsBaseFragment {
                 if (thing != null) {
                     Paper.book().write(Constants.TAG_THING + curDate, thing);
                 }
+                ThingFragment.getInstance().pager.onRefreshComplete();
                 break;
         }
     }
@@ -92,6 +94,7 @@ public class ThingContentFragment extends AbsBaseFragment {
     public void onDataError(String url, HttpError error) {
         switch (url) {
             case Api.URL_THING:
+                ThingFragment.getInstance().pager.onRefreshComplete();
                 //没有数据，删除并销毁自己
                 finish();
                 break;
@@ -103,6 +106,7 @@ public class ThingContentFragment extends AbsBaseFragment {
         if (url.equals(Api.URL_THING)) {
             Thing thing = Paper.book().read(Constants.TAG_THING + curDate);
             refreshUI(thing);
+            ThingFragment.getInstance().pager.onRefreshComplete();
         }
     }
 
@@ -165,7 +169,16 @@ public class ThingContentFragment extends AbsBaseFragment {
 
     @Override
     public void finish() {
-        ThingFragment.adapter.removeLast();
-        onDestroy();
+        ThingFragment.adapter.removeFromAdapter(this);
+    }
+
+    public static ThingContentFragment newInstance(int index) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_DATE, TimeUtil.getDate());
+        bundle.putInt(Constants.KEY_INDEX, index);
+        ThingContentFragment fragment = new ThingContentFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 }

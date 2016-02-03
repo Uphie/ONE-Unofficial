@@ -18,6 +18,7 @@ import studio.uphie.one.common.Constants;
 import studio.uphie.one.common.HttpData;
 import studio.uphie.one.common.HttpError;
 import studio.uphie.one.ui.article.Article;
+import studio.uphie.one.ui.article.ArticleFragment;
 import studio.uphie.one.ui.home.HomeFragment;
 import studio.uphie.one.utils.JsonUtil;
 import studio.uphie.one.utils.TimeUtil;
@@ -90,6 +91,7 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
                 if (question != null) {
                     Paper.book().write(Constants.TAG_QUESTION + curDate, question);
                 }
+                QuestionFragment.getInstance().pager.onRefreshComplete();
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
@@ -110,6 +112,7 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
     public void onDataError(String url, HttpError error) {
         switch (url) {
             case Api.URL_QUESTION:
+                QuestionFragment.getInstance().pager.onRefreshComplete();
                 //没有数据，删除并销毁自己
                 finish();
                 break;
@@ -121,6 +124,7 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
         if (url.equals(Api.URL_QUESTION)) {
             Question question = Paper.book().read(Constants.TAG_QUESTION + curDate, null);
             refreshUI(question);
+            QuestionFragment.getInstance().pager.onRefreshComplete();
         }
     }
 
@@ -167,7 +171,16 @@ public class QuestionContentFragment extends AbsBaseFragment implements LikeView
 
     @Override
     public void finish() {
-        QuestionFragment.adapter.removeLast();
-        onDestroy();
+        QuestionFragment.adapter.removeFromAdapter(this);
+    }
+
+    public static QuestionContentFragment newInstance(int index) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_DATE, TimeUtil.getDate());
+        bundle.putInt(Constants.KEY_INDEX, index);
+        QuestionContentFragment fragment = new QuestionContentFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 }

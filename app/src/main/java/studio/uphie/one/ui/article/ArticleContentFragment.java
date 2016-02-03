@@ -90,6 +90,7 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
                 if (article != null) {
                     Paper.book().write(Constants.TAG_ARTICLE + curDate, article);
                 }
+                ArticleFragment.getInstance().pager.onRefreshComplete();
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
@@ -110,6 +111,7 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
     public void onDataError(String url, HttpError error) {
         switch (url) {
             case Api.URL_ARTICLE:
+                ArticleFragment.getInstance().pager.onRefreshComplete();
                 //没有数据，删除并销毁自己
                 finish();
                 break;
@@ -121,6 +123,7 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
         if (url.equals(Api.URL_ARTICLE)) {
             Article article = Paper.book().read(Constants.TAG_ARTICLE + curDate, null);
             refreshUI(article);
+            ArticleFragment.getInstance().pager.onRefreshComplete();
         }
     }
 
@@ -176,7 +179,16 @@ public class ArticleContentFragment extends AbsBaseFragment implements LikeView.
 
     @Override
     public void finish() {
-        ArticleFragment.adapter.removeLast();
-        onDestroy();
+        ArticleFragment.adapter.removeFromAdapter(this);
+    }
+
+    public static ArticleContentFragment newInstance(int index) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_DATE, TimeUtil.getDate());
+        bundle.putInt(Constants.KEY_INDEX, index);
+        ArticleContentFragment fragment = new ArticleContentFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 }

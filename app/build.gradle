@@ -8,8 +8,8 @@ android {
         applicationId "studio.uphie.one"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 5
-        versionName "2016-1-27"
+        versionCode 6
+        versionName "2016-2-3"
     }
     buildTypes {
         release {

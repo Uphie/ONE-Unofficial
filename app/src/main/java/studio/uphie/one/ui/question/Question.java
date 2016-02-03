@@ -55,11 +55,11 @@ public class Question {
      */
     public String sEditor;
 
-    class QNCmt {
-        String strCnt;
-        String strId;
-        String strD;
-        String pNum;
-        String upFg;
+    public static class QNCmt {
+        public String strCnt;
+        public String strId;
+        public String strD;
+        public String pNum;
+        public String upFg;
     }
 }

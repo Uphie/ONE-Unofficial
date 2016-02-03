@@ -1,5 +1,6 @@
 package studio.uphie.one.abs;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,16 @@ public abstract class AbsBaseFragment extends Fragment implements IInit, IHttp {
      * 当前的索引
      */
     protected int index;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override

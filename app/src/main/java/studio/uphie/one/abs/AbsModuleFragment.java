@@ -15,10 +15,15 @@ import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.uphie.one.R;
+import studio.uphie.one.common.Constants;
 import studio.uphie.one.interfaces.IInit;
 import studio.uphie.one.interfaces.IShare;
 import studio.uphie.one.interfaces.ShareChannel;
@@ -27,6 +32,7 @@ import studio.uphie.one.ui.home.Home;
 import studio.uphie.one.ui.question.Question;
 import studio.uphie.one.ui.thing.Thing;
 import studio.uphie.one.utils.TextToast;
+import studio.uphie.one.utils.TimeUtil;
 
 /**
  * Created by Uphie on 2015/10/30.
@@ -35,10 +41,11 @@ import studio.uphie.one.utils.TextToast;
 public abstract class AbsModuleFragment extends Fragment implements IInit, ViewPager.OnPageChangeListener, IShare {
 
     @Bind(R.id.pager)
-    public ViewPager pager;
+    public PullToRefreshViewPager pager;
 
     public ShareDialog shareDialog;
-    CallbackManager callbackManager;
+    public static FragmentAdapter adapter;
+    public static AbsModuleFragment instance;
 
     @Nullable
     @Override
@@ -46,7 +53,7 @@ public abstract class AbsModuleFragment extends Fragment implements IInit, ViewP
         View view = inflater.inflate(getLayoutId(), null);
         ButterKnife.bind(this, view);
         shareDialog = new ShareDialog(this);
-        callbackManager = CallbackManager.Factory.create();
+        CallbackManager callbackManager = CallbackManager.Factory.create();
         shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
@@ -63,8 +70,17 @@ public abstract class AbsModuleFragment extends Fragment implements IInit, ViewP
                 TextToast.shortShow(getString(R.string.share_fail));
             }
         });
-        pager.addOnPageChangeListener(this);
+        pager.setOnPageChangeListener(this);
+        pager.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ViewPager>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ViewPager> refreshView) {
+                refresh();
+            }
+        });
+        adapter = new FragmentAdapter(getChildFragmentManager(), new ArrayList<AbsBaseFragment>());
+        pager.setAdapter(adapter);
         init();
+        instance=this;
         return view;
     }
 
@@ -104,7 +120,7 @@ public abstract class AbsModuleFragment extends Fragment implements IInit, ViewP
                 } else if (data instanceof Article) {
                     Article article = (Article) data;
                     ShareLinkContent content = new ShareLinkContent.Builder()
-                            .setContentDescription(article.strContent.substring(0,30)+"……")
+                            .setContentDescription(article.strContent.substring(0, 30) + "……")
                             .setContentTitle("「ONE·一个」 【文章】" + article.strContMarketTime)
                             .setContentUrl(Uri.parse(article.sWebLk)).build();
                     if (shareDialog.canShow(content, ShareDialog.Mode.AUTOMATIC)) {
@@ -141,4 +157,9 @@ public abstract class AbsModuleFragment extends Fragment implements IInit, ViewP
                 break;
         }
     }
+
+    public static AbsModuleFragment getInstance(){
+        return instance;
+    }
+    public abstract void refresh();
 }

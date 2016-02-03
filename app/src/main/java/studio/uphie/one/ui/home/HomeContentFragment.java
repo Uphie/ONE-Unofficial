@@ -94,6 +94,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
                 if (home != null) {
                     Paper.book().write(Constants.TAG_HOME + curDate, home);
                 }
+                HomeFragment.getInstance().pager.onRefreshComplete();
                 break;
             case Api.URL_LIKE_OR_CANCLELIKE:
                 try {
@@ -114,6 +115,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
     public void onDataError(String url, HttpError error) {
         switch (url) {
             case Api.URL_HOME:
+                HomeFragment.getInstance().pager.onRefreshComplete();
                 //没有数据，删除并销毁自己
                 finish();
                 break;
@@ -125,6 +127,7 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
         if (url.equals(Api.URL_HOME)) {
             Home home = Paper.book().read(Constants.TAG_HOME + curDate, null);
             refreshUI(home);
+            HomeFragment.getInstance().pager.onRefreshComplete();
         }
     }
 
@@ -204,7 +207,16 @@ public class HomeContentFragment extends AbsBaseFragment implements LikeView.OnL
 
     @Override
     public void finish() {
-        HomeFragment.adapter.removeLast();
-        onDestroy();
+        HomeFragment.adapter.removeFromAdapter(this);
+    }
+
+    public static HomeContentFragment newInstance(int index) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_DATE, TimeUtil.getDate());
+        bundle.putInt(Constants.KEY_INDEX, index);
+        HomeContentFragment fragment = new HomeContentFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 }
