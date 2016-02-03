@@ -26,7 +26,6 @@
   
 截图
 -----------
-![Welcome](https://github.com/Uphie/ONE-Unofficial/blob/master/Screenshots/screenshot-5.png)
 
 ![Home](https://github.com/Uphie/ONE-Unofficial/blob/master/Screenshots/screenshot-1.png) 
 ![Article](https://github.com/Uphie/ONE-Unofficial/blob/master/Screenshots/screenshot-2.png)
