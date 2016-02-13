@@ -35,4 +35,17 @@ public class FileManager {
         return appDir;
     }
 
+    /**
+     * 获得应用log目录
+     *
+     * @return log目录
+     */
+    public static File getLogDir() {
+        String appDir = getAppDir();
+        String logDir = appDir + "/log";
+        File dir = new File(logDir);
+        dir.mkdirs();
+        return dir;
+    }
+
 }

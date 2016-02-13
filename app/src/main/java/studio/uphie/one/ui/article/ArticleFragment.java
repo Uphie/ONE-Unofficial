@@ -9,7 +9,7 @@ import java.util.List;
 
 import studio.uphie.one.R;
 import studio.uphie.one.abs.AbsModuleFragment;
-import studio.uphie.one.abs.FragmentAdapter;
+import studio.uphie.one.ui.FragmentAdapter;
 import studio.uphie.one.utils.TimeUtil;
 
 /**

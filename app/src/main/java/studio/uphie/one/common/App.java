@@ -4,10 +4,10 @@ import android.app.Application;
 import android.util.DisplayMetrics;
 
 import com.facebook.FacebookSdk;
-import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.push.FeedbackPush;
 
 import io.paperdb.Paper;
+import studio.uphie.one.utils.CrashHandler;
 import studio.uphie.one.utils.ImageUtil;
 import studio.uphie.one.utils.NetworkUtil;
 import studio.uphie.one.utils.TextToast;
@@ -23,12 +23,15 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FacebookSdk.sdkInitialize(getApplicationContext());
         Paper.init(this);
+
+        CrashHandler.getInstance().init(this);
         ImageUtil.init(this);
         NetworkUtil.init(this);
         TextToast.init(this);
 
+        //Facebook分享初始化
+        FacebookSdk.sdkInitialize(getApplicationContext());
         //友盟意见反馈初始化
         FeedbackPush.getInstance(this).init(false);
     }

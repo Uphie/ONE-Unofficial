@@ -23,16 +23,15 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.uphie.one.R;
-import studio.uphie.one.common.Constants;
 import studio.uphie.one.interfaces.IInit;
 import studio.uphie.one.interfaces.IShare;
 import studio.uphie.one.interfaces.ShareChannel;
+import studio.uphie.one.ui.FragmentAdapter;
 import studio.uphie.one.ui.article.Article;
 import studio.uphie.one.ui.home.Home;
 import studio.uphie.one.ui.question.Question;
 import studio.uphie.one.ui.thing.Thing;
 import studio.uphie.one.utils.TextToast;
-import studio.uphie.one.utils.TimeUtil;
 
 /**
  * Created by Uphie on 2015/10/30.
