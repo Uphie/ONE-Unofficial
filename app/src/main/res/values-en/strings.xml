@@ -32,4 +32,6 @@
     <string name="item_share_app">Share to you friends</string>
     <string name="item_comment">Comment</string>
     <string name="item_feedback">Feedback</string>
+
+    <string name="non_market_app">No market app is installed on your phone</string>
 </resources>

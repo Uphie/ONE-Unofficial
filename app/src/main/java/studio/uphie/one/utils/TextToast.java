@@ -17,16 +17,34 @@ public class TextToast {
     }
 
     public static void shortShow(String content){
-        if (content==null){
-            throw new IllegalStateException("TextToast未初始化");
+        if (context==null){
+            throw new IllegalStateException("TextToast was not initialized");
+        }
+        Toast toast= Toast.makeText(context, content, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+    public static void shortShow(int resId){
+        String content=context.getResources().getString(resId);
+        if (context==null){
+            throw new IllegalStateException("TextToast was not initialized");
         }
         Toast toast= Toast.makeText(context, content, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
     public static void longShow(String content){
-        if (content==null){
-            throw new IllegalStateException("TextToast未初始化");
+        if (context==null){
+            throw new IllegalStateException("TextToast was not initialized");
+        }
+        Toast toast= Toast.makeText(context, content, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+    public static void longShow(int resId){
+        String content=context.getResources().getString(resId);
+        if (context==null){
+            throw new IllegalStateException("TextToast was not initialized");
         }
         Toast toast= Toast.makeText(context, content, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);

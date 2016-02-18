@@ -29,7 +29,7 @@ public class AboutActivity extends AbsBaseActivity {
 
     @Override
     public void init() {
-        setTitle("关于");
+        setTitle(R.string.item_about);
 
         String s = getResources().getString(R.string.content_about);
         int start=s.indexOf("『");

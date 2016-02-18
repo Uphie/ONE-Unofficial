@@ -163,9 +163,10 @@ public abstract class AbsBaseActivity extends Activity implements IInit, IHttp, 
 
     /**
      * 设置顶部标题
-     * @param content 标题内容
+     * @param resId 标题内容资源id
      */
-    public void setTitle(String content){
+    public void setTitle(int resId){
+        String content=getResources().getString(resId);
         if (tv_title!=null){
             tv_title.setText(content);
         }

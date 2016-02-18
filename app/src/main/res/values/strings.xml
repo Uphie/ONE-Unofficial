@@ -31,6 +31,8 @@
     <string name="item_comment">评分</string>
     <string name="item_feedback">意见反馈</string>
 
+    <string name="non_market_app">您手机上还没有安装应用商店</string>
+
     <string name="content_about">本App为『ONE·一个』的一个非官方版本，旨在做一个更喜欢的ONE以及Android技术交流，内容的版权为官方所有。\n\n联系方式\n微博：http://weibo.com/u/5737193521\n推特：https://twiter.com/UphieElis\n邮箱：uphie7@gmail.com</string>
 
     <string name="tip_feedback">请输入意见或建议</string>

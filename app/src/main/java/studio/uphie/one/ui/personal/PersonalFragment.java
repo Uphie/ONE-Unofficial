@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import studio.uphie.one.R;
+import studio.uphie.one.utils.TextToast;
 
 /**
  * Created by Uphie on 2015/9/6.
@@ -53,7 +55,7 @@ public class PersonalFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.item_about, R.id.item_share_app,R.id.item_feedback, R.id.item_comment})
+    @OnClick({R.id.item_about, R.id.item_share_app, R.id.item_feedback, R.id.item_comment})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -75,7 +77,14 @@ public class PersonalFragment extends Fragment {
                 //跳转到应用商店，官方ONE的详情页
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("market://details?id=one.hh.oneclient"));
-                startActivity(intent);
+                //必须先检查是否有应用商店安装，否则可能会崩溃
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    //有应用商店
+                    startActivity(intent);
+                }else {
+                    //无应用商店
+                    TextToast.longShow(R.string.non_market_app);
+                }
                 break;
         }
     }

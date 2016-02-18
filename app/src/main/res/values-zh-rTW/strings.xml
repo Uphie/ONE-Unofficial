@@ -30,4 +30,6 @@
     <string name="item_comment">評分</string>
     <string name="item_feedback">意見回饋</string>
 
+    <string name="non_market_app">您的手機上還沒有安裝應用商店</string>
+
 </resources>

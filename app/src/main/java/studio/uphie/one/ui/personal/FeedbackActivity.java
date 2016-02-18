@@ -59,7 +59,7 @@ public class FeedbackActivity extends AbsBaseActivity {
     @Override
     public void init() {
 
-        setTitle("意见反馈");
+        setTitle(R.string.item_feedback);
 
         conversation = new FeedbackAgent(this).getDefaultConversation();
 
