@@ -7,6 +7,7 @@ import com.facebook.FacebookSdk;
 import com.umeng.fb.push.FeedbackPush;
 
 import io.paperdb.Paper;
+import studio.uphie.one.utils.ConfigUtil;
 import studio.uphie.one.utils.CrashHandler;
 import studio.uphie.one.utils.ImageUtil;
 import studio.uphie.one.utils.NetworkUtil;
@@ -28,6 +29,7 @@ public class App extends Application {
         CrashHandler.getInstance().init(this);
         ImageUtil.init(this);
         NetworkUtil.init(this);
+        ConfigUtil.init(this);
         TextToast.init(this);
 
         //Facebook分享初始化

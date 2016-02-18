@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -44,6 +45,7 @@ import studio.uphie.one.ui.home.HomeFragment;
 import studio.uphie.one.ui.personal.PersonalFragment;
 import studio.uphie.one.ui.question.QuestionFragment;
 import studio.uphie.one.ui.thing.ThingFragment;
+import studio.uphie.one.utils.ConfigUtil;
 import studio.uphie.one.utils.SysUtil;
 import studio.uphie.one.utils.TextToast;
 
@@ -408,13 +410,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         final FeedbackAgent agent = new FeedbackAgent(this);
         agent.sync();
         UserInfo userInfo = agent.getUserInfo();
-        if (userInfo == null) {
-            UserInfo u = new UserInfo();
+        String nickname= ConfigUtil.readString("user","nickname");
+        if (TextUtils.isEmpty(nickname)){
             Map<String, String> contact = new HashMap<>();
             contact.put("昵称", generateNickname());
-            contact.put("手机型号", SysUtil.getPhoneModel());
-            u.setContact(contact);
-            agent.setUserInfo(u);
+            userInfo.setContact(contact);
+            agent.setUserInfo(userInfo);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
