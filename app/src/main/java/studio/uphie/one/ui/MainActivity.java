@@ -26,6 +26,7 @@ import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.model.UserInfo;
+import com.umeng.message.PushAgent;
 import com.umeng.update.UmengDownloadListener;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
@@ -333,6 +334,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             View view = View.inflate(this, R.layout.menu_share, null);
             view.findViewById(R.id.share_facebook).setOnClickListener(this);
             view.findViewById(R.id.share_twitter).setOnClickListener(this);
+            view.findViewById(R.id.share_google_plus).setOnClickListener(this);
             view.findViewById(R.id.share_wechat).setOnClickListener(this);
             view.findViewById(R.id.share_weibo).setOnClickListener(this);
             view.findViewById(R.id.share_qq).setOnClickListener(this);
@@ -341,7 +343,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             sharePanel = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             sharePanel.setOutsideTouchable(true);
-            sharePanel.setAnimationStyle(R.style.FadeStyle);
             sharePanel.setFocusable(true);
             sharePanel.setBackgroundDrawable(new BitmapDrawable());
             sharePanel.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -408,21 +409,29 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         //同步数据
         final FeedbackAgent agent = new FeedbackAgent(this);
+//        agent.openFeedbackPush();      启用推送在小米手机上会有崩溃发生
         agent.sync();
         UserInfo userInfo = agent.getUserInfo();
-        String nickname= ConfigUtil.readString("user","nickname");
-        if (TextUtils.isEmpty(nickname)){
+        String nickname = ConfigUtil.readString("user", "nickname");
+        if (TextUtils.isEmpty(nickname)) {
+            final String n = generateNickname();
             Map<String, String> contact = new HashMap<>();
-            contact.put("昵称", generateNickname());
+            contact.put("昵称", n);
             userInfo.setContact(contact);
             agent.setUserInfo(userInfo);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    agent.updateUserInfo();
+                    boolean success = agent.updateUserInfo();
+                    if (success) {
+                        ConfigUtil.writeString("user", "nickname", n);
+                    }
                 }
             }).start();
+
         }
+        //启用推送
+//        PushAgent.getInstance(this).enable();  启用推送在小米手机上会有崩溃发生
     }
 
     /**
@@ -439,11 +448,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void showUpdateDialog(final UpdateResponse updateResponse) {
         View view = View.inflate(this, R.layout.dialog_update, null);
-        TextView content= (TextView) view.findViewById(R.id.dialog_update_content);
-        TextView cancel= (TextView) view.findViewById(R.id.dialog_update_cancel);
-        TextView ok= (TextView) view.findViewById(R.id.dialog_update_ok);
+        TextView content = (TextView) view.findViewById(R.id.dialog_update_content);
+        TextView cancel = (TextView) view.findViewById(R.id.dialog_update_cancel);
+        TextView ok = (TextView) view.findViewById(R.id.dialog_update_ok);
 
-        content.setText(String.format(getResources().getString(R.string.label_update_content),updateResponse.version,updateResponse.updateLog));
+        content.setText(String.format(getResources().getString(R.string.label_update_content), updateResponse.version, updateResponse.updateLog));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
         builder.setView(view);
@@ -461,8 +470,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onClick(View v) {
                 dialog.dismiss();
                 //开始下载
-                File file=UmengUpdateAgent.downloadedFile(MainActivity.this,updateResponse);
-                if (file==null) {
+                File file = UmengUpdateAgent.downloadedFile(MainActivity.this, updateResponse);
+                if (file == null) {
                     //若未下载，下载
                     UmengUpdateAgent.startDownload(MainActivity.this, updateResponse);
                 } else {

@@ -8,8 +8,8 @@ android {
         applicationId "studio.uphie.one"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 6
-        versionName "2016-2-3"
+        versionCode 8
+        versionName "2016-2-19"
     }
     buildTypes {
         release {
@@ -34,4 +34,6 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile files('libs/com.umeng.fb.5.4.0.jar')
     compile files('libs/umeng-update-v2.6.0.1.jar')
+    //友盟推送  友盟推送配合用户反馈sdk在小米手机上会有崩溃的情况发生
+//    compile files('libs/com.umeng.message_v2.7.0.jar')
 }
