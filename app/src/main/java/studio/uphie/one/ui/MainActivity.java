@@ -7,27 +7,20 @@ import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.model.UserInfo;
-import com.umeng.message.PushAgent;
-import com.umeng.update.UmengDownloadListener;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
@@ -38,6 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import studio.uphie.one.R;
 import studio.uphie.one.common.App;
 import studio.uphie.one.interfaces.ShareChannel;
@@ -49,9 +44,6 @@ import studio.uphie.one.ui.thing.ThingFragment;
 import studio.uphie.one.utils.ConfigUtil;
 import studio.uphie.one.utils.SysUtil;
 import studio.uphie.one.utils.TextToast;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Uphie on 2015/9/5.
