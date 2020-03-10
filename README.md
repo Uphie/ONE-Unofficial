@@ -2,6 +2,8 @@
 
 [Read in English](https://github.com/Uphie/ONE-Unofficial/wiki/ONE-Unofficial)
 
+**此项目已停止维护。**
+
 非官方版“**一个(ONE)**”，一个比官方版更优秀的版本。
 
 "一个" 是一个韩寒主编的电子杂志 (**http://wufazhuce.com/**)。
@@ -51,15 +53,3 @@
 
 * 2016-1-8，由于工作的关系有一段时间没有维护了，现在拾了起来。从这版中开始使用日期作为版本名，更改了包名为studio.uphie.one。修复了程序长时间后台运行再打开界面重叠的bug，放弃了双击界面“喜欢”的功能。
 
-下载
------------
-* [下载链接](http://www.pgyer.com/vnS3)
-* 二维码
-  
-  ![Qrcode for download](http://static.pgyer.com/app/qrcode/vnS3)
-
-联系我
-------------
-* 邮箱: uphie7@gmail.com
-* 微博: http://weibo.com/u/5737193521
-* Twitter: https://twitter.com/UphieElis
